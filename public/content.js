@@ -1,40 +1,27 @@
 /* global chrome */
 
 chrome.runtime.onMessage.addListener(function(request, sender) {
-  console.log("0. paramters that we get in content fun.. - ", request , sender)
   main();
 });
 
 function main() {
-  console.log("1. content.js: chrome.runtime.id- ", chrome.runtime.id)
-  // eslint-disable-next-line no-undef
+  // Get the extensnsion origen url
   const extensionOrigin = 'chrome-extension://' + chrome.runtime.id;
-
-  console.log("2. content.js: extensionOrigin- " , extensionOrigin)
-
-  // eslint-disable-next-line no-restricted-globals
-
-  console.log("3. content.js:location.ancestorOrigins.contains(extensionOrigin) -", location.ancestorOrigins.contains(extensionOrigin))
-
   if (!location.ancestorOrigins.contains(extensionOrigin)) {
-    
     // Fetch the local React index.html page
-    // eslint-disable-next-line no-undef
     fetch(chrome.runtime.getURL('index.html') /*, options */)
       .then((response) => response.text())
       .then((html) => {
-        console.log( "then 2 - ", html)
+        // Create the html that inject to the web
         var styleStashHTML = html.replace(/\/static\//g, `${extensionOrigin}/static/`);
         styleStashHTML = '<div id="video-tag-manger-section">' + styleStashHTML + '</div>'
-
-        console.log( "then 2 - ", styleStashHTML)
-
         var videoTagSection = document.getElementById("video-tag-manger-section");
-        console.log(videoTagSection);
+        // Check if the editor desplay allredy
         if (videoTagSection != null) {
-          console.log(videoTagSection)
+          // Remove the Editor from the page
           videoTagSection.remove()
         } else
+          // Add the Editor to the page
           $(styleStashHTML).appendTo('body');
       })
       .catch((error) => {
@@ -48,20 +35,34 @@ window.addEventListener("message", function(event) {
   onDidReceiveMessage(event);
 });
 
-function formtSecToMinSec(timeInSec) {
+/**
+ * Get time n seconds and return the time in H:M:S format
+ * 
+ * @param {int} timeInSec time in seconds format 
+ * @returns {String}  
+ */
+function secToHoSecMinFormat(timeInSec) {
+  let hours = Math.floor(timeInSec / 360)
   let minutes = Math.floor(timeInSec / 60);   
   let seconds = Math.floor(timeInSec - minutes * 60)
-  let x = minutes < 10 ? "0" + minutes : minutes;
-  let y = seconds < 10 ? "0" + seconds : seconds;
-  return x + ":" + y ;
+  let x = hours < 10 ? "0" + hours : hours;
+  let y = minutes < 10 ? "0" + minutes : minutes;
+  let z = seconds < 10 ? "0" + seconds : seconds;
+  return  x + ":" + y + ":" + z ;
 }
 
+/**
+ * Waiting for GET_CURRENT_TIME request
+ * Then רreturn a message of the current time in the video 
+ * 
+ * @param {Event Object} event 
+ */
 async function onDidReceiveMessage(event) {
-  if (event.data.type && (event.data.type === "GET_EXTENSION_ID")) {
-    var vid = document.getElementsByTagName("video")[0];
-    let currentTimeFormatMinSec = formtSecToMinSec(vid.currentTime);
-
-    window.postMessage({ type: "EXTENSION_ID_RESULT", videoCurrentTime: currentTimeFormatMinSec }, "*");
+  if (event.data.type && (event.data.type === "GET_CURRENT_TIME")) {
+    var videoObject = document.getElementsByTagName("video")[0];
+    let currentTimeFormated = secToHoSecMinFormat(videoObject.currentTime);
+    // send the massge 
+    window.postMessage({ type: "CURRENT_TIME_RESULT", videoCurrentTime: currentTimeFormated }, "*");
   }
 }
 
