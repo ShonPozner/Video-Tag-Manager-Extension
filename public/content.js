@@ -17,14 +17,25 @@ function main() {
   console.log("3. content.js:location.ancestorOrigins.contains(extensionOrigin) -", location.ancestorOrigins.contains(extensionOrigin))
 
   if (!location.ancestorOrigins.contains(extensionOrigin)) {
+    
     // Fetch the local React index.html page
     // eslint-disable-next-line no-undef
     fetch(chrome.runtime.getURL('index.html') /*, options */)
       .then((response) => response.text())
       .then((html) => {
-        const styleStashHTML = html.replace(/\/static\//g, `${extensionOrigin}/static/`);
-        // eslint-disable-next-line no-undef
-        $(styleStashHTML).appendTo('body');
+        console.log( "then 2 - ", html)
+        var styleStashHTML = html.replace(/\/static\//g, `${extensionOrigin}/static/`);
+        styleStashHTML = '<div id="video-tag-manger-section">' + styleStashHTML + '</div>'
+
+        console.log( "then 2 - ", styleStashHTML)
+
+        var videoTagSection = document.getElementById("video-tag-manger-section");
+        console.log(videoTagSection);
+        if (videoTagSection != null) {
+          console.log(videoTagSection)
+          videoTagSection.remove()
+        } else
+          $(styleStashHTML).appendTo('body');
       })
       .catch((error) => {
         console.warn(error);

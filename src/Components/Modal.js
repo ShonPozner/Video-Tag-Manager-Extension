@@ -4,13 +4,16 @@ import Draggable from 'react-draggable';
 import { ModalContext } from '../Contexts/ModalProvider';
 import { get } from 'jquery';
 
-const closeBlock = () => {
-  let block = document.getElementsByClassName("modal-window")[0];
-  console.log(block)
+const hiddeVideoTagSection = () => {
+  let videoTagSection = document.getElementById("video-tag-manger-section");
+  console.log(videoTagSection)
+  videoTagSection.hidden=true;
+}
 
-  block.hidden=true;
-  console.log(block)
-
+const closeVideoTagSection = () => {
+  let videoTagSection = document.getElementById("video-tag-manger-section");
+  console.log(videoTagSection)
+  videoTagSection.remove();
 }
 
 const Modal = () => {
@@ -30,7 +33,7 @@ const Modal = () => {
                   <div className="modal-body">
                     <div className="modal-handle">
                       <div className="modal-close-button">
-                        <X color="#5d6484" size="14" onClick={closeBlock} />
+                        <X color="#5d6484" size="14" onClick={closeVideoTagSection} />
                       </div>
                     </div>
                     <div className="modal-content">
