@@ -42,7 +42,7 @@ window.addEventListener("message", function(event) {
  * @returns {String}  
  */
 function secToHoSecMinFormat(timeInSec) {
-  let hours = Math.floor(timeInSec / 360)
+  let hours = Math.floor(timeInSec / 3600)
   let minutes = Math.floor(timeInSec / 60);   
   let seconds = Math.floor(timeInSec - minutes * 60)
   let x = hours < 10 ? "0" + hours : hours;

@@ -12,7 +12,8 @@
   },
   "browser_action": {
     "default_icon": "logos/video_tag_icon_128.png",
-    "default_title": "React Chrome Extension Video Tag Manager"
+    "default_title": "React Chrome Extension Video Tag Manager",
+    "default_popup": "popup.html"
   },
   "background": {
     "scripts": ["./jquery.js", "background.js"]
