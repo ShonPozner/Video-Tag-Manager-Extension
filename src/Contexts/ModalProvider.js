@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import useWindowPosition from '../Hooks/useWindowPosition';
+import UseWindowPosition from '../Hooks/UseWindowPosition';
 
 export const ModalContext = React.createContext({});
 
 const ModalProvider = ({ children }) => {
-  const { windowPosition } = useWindowPosition();
+  const { windowPosition } = UseWindowPosition();
   const [videoCurrentTime, setVideoCurrentTime] = useState(undefined);
 
   function getVideoCurrentTime() {

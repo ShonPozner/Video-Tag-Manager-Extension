@@ -39,6 +39,6 @@ function openSummarySection() {
     self.close()
     chrome.tabs.query({ currentWindow:true, active: true}, function(tabs){
         var activeTab = tabs[0];
-        chrome.tabs.sendMessage(activeTab.id, { message: 'load' });
+        chrome.tabs.sendMessage(activeTab.id, { message: 'Open Summary' });
     })
 }
