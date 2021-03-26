@@ -19,7 +19,7 @@ const closeVideoTagSection = () => {
 const Modal = () => {
   return (
     <ModalContext.Consumer>
-      {({ windowPosition, hasDraggedWindowPosition, extensionId: currentTime, getExtensionId }) => (
+      {({ windowPosition, hasDraggedWindowPosition, videoCurrentTime, getVideoCurrentTime }) => (
         <Draggable
           handle=".modal-handle"
           defaultPosition={{x: windowPosition.x, y: windowPosition.y}}
@@ -29,24 +29,22 @@ const Modal = () => {
             transform: windowPosition,
         }}>
             <div className="modal-window-inner-border">
-                <>
-                  <div className="modal-body">
-                    <div className="modal-handle">
-                      <div className="modal-close-button">
-                        <X color="#5d6484" size="14" onClick={closeVideoTagSection} />
-                      </div>
-                    </div>
-                    <div className="modal-content">
-                      <h3 className="time-format" >{currentTime}</h3>
-                      <button
-                        onClick={getExtensionId}
-                        className="modal-button"
-                      >
-                        Get Current Time
-                      </button>
+                <div className="modal-body">
+                  <div className="modal-handle">
+                    <div className="modal-close-button">
+                      <X color="#5d6484" size="14" onClick={closeVideoTagSection} />
                     </div>
                   </div>
-                </>
+                  <div className="modal-content">
+                    <h3 className="time-format" >{videoCurrentTime}</h3>
+                    <button
+                      onClick={getVideoCurrentTime}
+                      className="modal-button"
+                    >
+                      Get Current Time
+                    </button>
+                  </div>
+                </div>
               </div>
           </div>
         </Draggable>
