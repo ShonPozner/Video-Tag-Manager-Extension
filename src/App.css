@@ -1,24 +1,28 @@
 #modal-window {
-  position: absolute;
+  z-index: 99999999;
+  font-family: sans-serif;
+  pointer-events: none;
   width: 99%;
   top: 0;
-  z-index: 99999;
-  font-family: sans-serif;
+  height: 99%;
+  position: absolute;
+
 }
 
 .modal-window {
+  pointer-events: all;
   top: 0;
   left: 0;
   will-change: transform;
-  margin-top: 2em;
-  position: absolute;
+  /* margin-top: 2em; */
   background: rgba(30, 32, 44, .99);
-  min-width: 150px;
-  height: initial;
+  /* height: initial; */
   border-radius: 3px;
   box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
-  z-index: 9999;
+  z-index: 99999999;
   border: 1px solid #333748;
+  float: right;
+  height: 100%;
 }
 
 .modal-window-inner-border {
