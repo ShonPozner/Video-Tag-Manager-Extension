@@ -10,7 +10,8 @@
 .accordion_section {
   display: flex;
   flex-direction: column;
-  max-width: fit-content;
+  /* max-width: fit-content; */
+  width: 350px;
 }
 
 /* Style the buttons that are used to open and close the accordion panel */

@@ -45,7 +45,7 @@ const Modal = () => {
                     {/* TODO Add timeLine */}
                   </div>
 
-                  <div>
+                  <div className="accordion-notes">
                       <AccordionNotes
                         title="What is your return policy?"
                         content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
@@ -58,23 +58,33 @@ const Modal = () => {
                         title="Can I use a custom domain?"
                         content="<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                                   </br>
-                                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                  </br>
                                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+                      />
+                      <AccordionNotes
+                        title="Which languages does you support?"
+                        content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                      />
+                      <AccordionNotes
+                        title="Which languages does you support?"
+                        content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                      />
+                      <AccordionNotes
+                        title="Which languages does you support?"
+                        content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                       />
                     </div>      
 
-                  <div className="modal-footer">
-                    <div className="modal-content">
-                      <h3 className="time-format" >{videoCurrentTime}</h3>
-                      <button
-                        onClick={getVideoCurrentTime}
-                        className="modal-button"
-                      >
-                        Get Current Time
-                      </button>
-                    </div>
+                <footer className="footer">
+                  <div className="modal-content">
+                    <h3 className="time-format" >{videoCurrentTime}</h3>
+                    <button
+                      onClick={getVideoCurrentTime}
+                      className="modal-button"
+                    >
+                      Get Current Time
+                    </button>
                   </div>
+                </footer>
 
                 </div>
               </div>
