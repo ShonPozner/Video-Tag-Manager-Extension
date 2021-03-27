@@ -4,6 +4,7 @@ import Draggable from 'react-draggable';
 import { ModalContext } from '../Contexts/ModalProvider';
 import { get } from 'jquery';
 import AccordionNotes from './AccordionNotes';
+import DemoNotes from './DemoNotes';
 
 const hiddeVideoTagSection = () => {
   let videoTagSection = document.getElementById("video-tag-manger-section");
@@ -46,33 +47,10 @@ const Modal = () => {
                   </div>
 
                   <div className="accordion-notes">
-                      <AccordionNotes
-                        title="What is your return policy?"
-                        content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                      />
-                      <AccordionNotes
-                        title="Which languages does you support?"
-                        content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                      />
-                      <AccordionNotes
-                        title="Can I use a custom domain?"
-                        content="<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                  </br>
-                                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
-                      />
-                      <AccordionNotes
-                        title="Which languages does you support?"
-                        content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                      />
-                      <AccordionNotes
-                        title="Which languages does you support?"
-                        content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                      />
-                      <AccordionNotes
-                        title="Which languages does you support?"
-                        content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                      />
-                    </div>      
+                    {DemoNotes.map((note) => (
+                      <AccordionNotes title={note.title} time={note.time} content={note.content}></AccordionNotes>
+                    ))}
+                  </div>      
 
                 <footer className="footer">
                   <div className="modal-content">
