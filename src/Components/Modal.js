@@ -48,7 +48,7 @@ const Modal = () => {
 
                   <div className="accordion-notes">
                     {DemoNotes.map((note) => (
-                      <AccordionNotes title={note.title} time={note.time} content={note.content}></AccordionNotes>
+                      <AccordionNotes key={note.id} tag={note.tag} title={note.title} time={note.time} content={note.content}></AccordionNotes>
                     ))}
                   </div>      
 

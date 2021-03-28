@@ -37,14 +37,11 @@
 .accordion_title {
   font-family: "Open Sans", sans-serif;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 12px;
+  margin-left: 10px;
 }
 
-/* Style the accordion chevron icon */
-.accordion_icon {
-  margin-left: 8px;
-  transition: transform 0.6s ease;
-}
+
 
 /* Style to rotate icon when state is active */
 .rotate {
@@ -63,12 +60,39 @@
 .accordion_text {
   font-family: "Open Sans", sans-serif;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 10px;
   padding: 6px;
 }
 
 .accordion_time {
-  margin-left: auto;
+  font-size: 12px;
+  text-align: center;
   font-weight: bold;
+}
+
+.accordion_tag {
+  color: red;
+  font-weight: bold;
+  border: 1px solid rgb(80, 77, 77)!important;
+  border-radius: 8px;
+  margin: 3px;
+}  
+
+.user-actions-icon {
+  color: black;
+  margin-left: auto;
+  float:right;
+  display: block;
+
+}
+
+.actions-icon {
+  margin-left: 2px;
+  margin-right: 2px;
+}
+/* Style the accordion chevron icon */
+.accordion_icon {
+  /* margin-left: 4px; */
+  transition: transform 0.6s ease;
 
 }

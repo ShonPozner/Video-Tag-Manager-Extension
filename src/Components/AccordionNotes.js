@@ -1,9 +1,10 @@
 //https://medium.com/skillthrive/build-a-react-accordion-component-from-scratch-using-react-hooks-a71d3d91324b
 
 import PropTypes from 'prop-types';
-
 import React, { useState, useRef } from "react";
 import Chevron from "./Chevron";
+import {FaRegEdit, FaTrash} from 'react-icons/fa'
+import {RiDeleteBin6Line} from 'react-icons/ri'
 
 import "./AccordionNotes.css";
 
@@ -32,9 +33,14 @@ const AccordionNotes = (props) => {
   return (
     <div className="accordion_section">
       <button className={`accordion ${setActive}`} onClick={toggleAccordion}>
+        <p className="accordion_tag">{props.tag}</p>
         <p className="accordion_title">{props.title}</p>
-        <p className="accordion_time">{props.time}</p>
-        <Chevron className={`${setRotate}`} width={10} fill={"#777"} />
+        <div className="user-actions-icon">
+          <FaRegEdit className="actions-icon"></FaRegEdit>
+          <FaTrash className="actions-icon" ></FaTrash>
+          <Chevron className={`${setRotate}`} width={10} fill={"#777"} />
+        </div>
+        
       </button>
       <div
         ref={content}
@@ -42,6 +48,7 @@ const AccordionNotes = (props) => {
         className="accordion_content"
       >
         <div className="accordion_content">
+          <h3 className="accordion_time">{props.time}</h3>
           <div
             className="accordion_text"
             dangerouslySetInnerHTML={{ __html: props.content }}
