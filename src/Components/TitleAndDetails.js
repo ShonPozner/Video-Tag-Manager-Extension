@@ -1,6 +1,8 @@
 import React from 'react'
 
 // TODO add props or state of tag and title name
+// TODO add icom of info.. that show date, author and so on?
+// TODO ADD EDIT BOTOON??  
 function TitleAndDetails() {
     return (
         <div className="modal-header"> 

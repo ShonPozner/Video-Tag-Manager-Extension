@@ -33,7 +33,6 @@ const Modal = () => {
                     </div>
                   </div>
 
-                  {/*TODO need to add Name, deatil and tags.. a and make title component */}
                   <TitleAndDetails></TitleAndDetails>
                   
                   <div className="accordion-notes">

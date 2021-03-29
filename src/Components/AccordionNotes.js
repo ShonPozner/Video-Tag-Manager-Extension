@@ -3,8 +3,8 @@
 import PropTypes from 'prop-types';
 import React, { useState, useRef } from "react";
 import Chevron from "./Chevron";
+import {ButtonNote} from  "./ButtonNote"
 import {FaRegEdit, FaTrash} from 'react-icons/fa'
-import {RiDeleteBin6Line} from 'react-icons/ri'
 
 import "./AccordionNotes.css";
 
