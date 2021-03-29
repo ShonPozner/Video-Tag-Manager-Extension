@@ -1,8 +1,9 @@
 import React from 'react'
+import{BsInfoCircle} from 'react-icons/bs'
 
 // TODO add props or state of tag and title name
-// TODO add icom of info.. that show date, author and so on?
-// TODO ADD EDIT BOTOON??  
+// TODO add icon of info.. that show date, author and so on?
+// TODO  EDIT button show all detalis??  
 function TitleAndDetails() {
     return (
         <div className="modal-header"> 
@@ -11,6 +12,7 @@ function TitleAndDetails() {
                 <li className="item-tag">tag 1</li>
                 <li className="item-tag">tag 2</li>
                 <li className="item-tag">tag 3</li>
+                <li><BsInfoCircle className='info-icon'></BsInfoCircle></li>
             </ul>
         </div>
     );
