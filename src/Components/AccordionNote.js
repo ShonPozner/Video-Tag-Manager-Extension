@@ -36,12 +36,13 @@ const AccordionNote = (props) => {
         <p className="accordion_title">{props.title}</p>
         <div className="user-actions-icon">
           <FaRegEdit className="actions-icon"></FaRegEdit>
-          <FaTrash className="actions-icon" ></FaTrash>
+          <FaTrash style={{cursor:'pointer'}} className="actions-icon" onClick={() =>props.removeFunction(props.id)} ></FaTrash>
+
           <Chevron className={`${setRotate}`} width={10} fill={"#777"} />
         </div>
-        
       </button>
-      <div
+
+    <div
         ref={content}
         style={{ maxHeight: `${setHeight}` }}
         className="accordion_content"
