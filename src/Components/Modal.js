@@ -2,15 +2,9 @@ import React from 'react';
 import { X } from 'react-feather';
 import Draggable from 'react-draggable';
 import { ModalContext } from '../Contexts/ModalProvider';
-import { get } from 'jquery';
 import AccordionNotes from './AccordionNotes';
 import DemoNotes from './DemoNotes';
-
-const hiddeVideoTagSection = () => {
-  let videoTagSection = document.getElementById("video-tag-manger-section");
-  console.log(videoTagSection)
-  videoTagSection.hidden=true;
-}
+import TitleAndDetails from './TitleAndDetails';
 
 const closeVideoTagSection = () => {
   let videoTagSection = document.getElementById("video-tag-manger-section");
@@ -32,26 +26,23 @@ const Modal = () => {
         }}>
             <div className="modal-window-inner-border">
                 <div className="modal-body">
+                  {/*TODO need to add someting? and make Top component */}
                   <div className="modal-handle">
                     <div className="modal-close-button">
                       <X color="#5d6484" size="14" onClick={closeVideoTagSection} />
                     </div>
                   </div>
 
-                  <div className="modal-header">
-                    <h2>Title Of The Summary...</h2>
-                  </div>
+                  {/*TODO need to add Name, deatil and tags.. a and make title component */}
+                  <TitleAndDetails></TitleAndDetails>
                   
-                  <div className="modal-timeline">
-                    {/* TODO Add timeLine */}
-                  </div>
-
                   <div className="accordion-notes">
                     {DemoNotes.map((note) => (
                       <AccordionNotes key={note.id} tag={note.tag} title={note.title} time={note.time} content={note.content}></AccordionNotes>
                     ))}
                   </div>      
-
+                
+                {/*TODO need to add button of new.. and create Footer component */}
                 <footer className="footer">
                   <div className="modal-content">
                     <h3 className="time-format" >{videoCurrentTime}</h3>

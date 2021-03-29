@@ -1,19 +1,12 @@
+/* TODO fix css classes */
+
 #modal-window {
   z-index: 99999999;
   font-family: sans-serif;
   pointer-events: none;
-  width: 99%;
+  width: 100%;
   top: 0;
-  /* height: 99%; */
   position: absolute;
-
-}
-
-h2 {
-  color: whitesmoke;
-  text-align: center;
-  margin-bottom: 25px;
-
 }
 
 .modal-window {
@@ -120,5 +113,4 @@ h2 {
 
 .accordion-notes {
   padding-bottom: 2.5rem;    /* Footer height */
-
 }
