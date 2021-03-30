@@ -2,6 +2,8 @@ import React, {useState} from "react"
 
 
 const AddNoteForm = (props) => {
+    
+
 
     const [title, setTitle] = useState('');
     const [tag, setTag] = useState('');
@@ -16,6 +18,7 @@ const AddNoteForm = (props) => {
         let timeFormated = document.getElementById("time-input").value;
 
         //TODO need update time sec too...
+    
 
 
         if (!content) {
@@ -25,7 +28,7 @@ const AddNoteForm = (props) => {
         // can add more cheacking format time or get default tag and so on...
 
         const newNote = {
-            id: 10,
+            id: 1,
             title: title,
             content: content,
             time: timeFormated,
@@ -36,29 +39,27 @@ const AddNoteForm = (props) => {
     }
 
     return(   
-        <form className='add-form' onSubmit={onSubmit}>
-            <div className="form-control">
-                <label>Title</label>
-                <input type='text' placeholder="Add Title" value={title}
-                onChange= {(e)=> setTitle(e.target.value)}
-                ></input>
-            </div>
-            <div className="form-control">
-                <label>Tag</label>
-                <input type='text' placeholder="Add Tag" value={tag}
+        <form className='add-form "form-style-9"' onSubmit={onSubmit}>
+            <ul>
+            <li>
+                <input class="field-style field-split align-left" type='text' name="title" placeholder="Add Title" value={title}
+                onChange= {(e)=> setTitle(e.target.value)}></input>
+                <input class="field-style field-split align-left" type='text'  name="title" placeholder="Add Tag" value={tag}
                 onChange= {(e)=> setTag(e.target.value)}></input>
-            </div>
-            <div className="form-control">
-                <label>Content</label>
-                <input type='text' placeholder="Add Content"  value={content}
-                onChange= {(e)=> setContent(e.target.value)}></input>
-            </div>
-            <div className="form-control">
-                <label>Time</label>
-                <input id="time-input" type='text' value={props.timeFormted}
+            </li>
+            <li>
+                <input class="field-style field-split align-left" id="time-input" type='text' value={props.timeFormted}
                 onChange= {(e)=> setFormatedTime(e.target.value)}></input> 
-            </div>
-            <input type='submit' value='Save Note'/>
+                {/* TODO add + and - time and buttom this time */}
+            </li>
+            <li>
+                <textarea name="content" class="field-style" placeholder="Add Content" value={content}
+                onChange= {(e)=> setContent(e.target.value)}></textarea>
+            </li>
+            <li>
+                <input type='submit' value='Save Note'/>
+            </li>
+            </ul>
         </form>
      )
     
