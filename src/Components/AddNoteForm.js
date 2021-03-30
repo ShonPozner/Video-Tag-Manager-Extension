@@ -1,8 +1,9 @@
 import React, {useState} from "react"
 
+import "./addNoteForm.css";
 
 const AddNoteForm = (props) => {
-    
+
 
 
     const [title, setTitle] = useState('');
@@ -36,20 +37,28 @@ const AddNoteForm = (props) => {
             timeSec: props.timeSec,
         }
         props.addNote(newNote)
+        props.setShowFromState(false)
     }
 
     return(   
-        <form className='add-form "form-style-9"' onSubmit={onSubmit}>
+        <form className="form-style-9" onSubmit={onSubmit}>
             <ul>
             <li>
-                <input class="field-style field-split align-left" type='text' name="title" placeholder="Add Title" value={title}
+                <input class="field-style field-full" type='text' name="title" placeholder="Add Title" value={title}
                 onChange= {(e)=> setTitle(e.target.value)}></input>
-                <input class="field-style field-split align-left" type='text'  name="title" placeholder="Add Tag" value={tag}
-                onChange= {(e)=> setTag(e.target.value)}></input>
             </li>
             <li>
                 <input class="field-style field-split align-left" id="time-input" type='text' value={props.timeFormted}
-                onChange= {(e)=> setFormatedTime(e.target.value)}></input> 
+                onChange= {(e)=> setFormatedTime(e.target.value)}></input>
+                <input class="field-style field-split align-right" type='text'  name="tag" placeholder="Add Tag" value={tag}
+                onChange= {(e)=> setTag(e.target.value)} list="tags"></input> 
+                    <datalist id="tags">
+                        {/* TODO add tags... */}
+                    <option>Summary</option>
+                    <option>Important</option>
+                    <option>Def</option>
+                    <option>Back</option>
+                    </datalist>
                 {/* TODO add + and - time and buttom this time */}
             </li>
             <li>

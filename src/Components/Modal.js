@@ -122,8 +122,6 @@ const closeVideoTagSection = () => {
                      currentTimeSec={currentTimeSec}
                      addNoteToSummary ={addNoteToSummary}
                     ></FooterAddButton>     
-      
-                  
                   </div>
                 </SummarysContext.Provider>
               </div>

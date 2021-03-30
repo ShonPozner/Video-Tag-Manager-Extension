@@ -4,23 +4,23 @@ import AddNoteForm from './AddNoteForm';
 const FooterAddButton = (props) => {
   const [showForm, setShowForm] = useState(false);
 
-
-  const begin = () => {
-    console.log(props)
+  // get the currant time and show the form (fip the state)
+  const clickedOnAddNote = () => {
     props.getVideoCurrentTime();
     setShowForm(!showForm);
   }
-
-
   
+  // TODO add Draggable...
   return (
-    <footer className="">
+    <footer className="footer">
       <div className="modal-content">
-        <button onClick={() => begin(props)} className="modal-button">
+        {showForm && <AddNoteForm timeSec={props.currentTimeSec} timeFormted={props.currentTimeFormated}
+         addNote={props.addNoteToSummary} setShowFromState={setShowForm} />}
+         {/* TODO style buttton to icon in the botoom? and hiide affter clicked */}
+        <button onClick={() => clickedOnAddNote(props)} className="modal-button">
             Add Note
         </button>
-        {showForm && <AddNoteForm timeSec={props.currentTimeSec} timeFormted={props.currentTimeFormated} addNote={props.addNoteToSummary}/>}
-        
+
       </div>
     </footer>
   );
