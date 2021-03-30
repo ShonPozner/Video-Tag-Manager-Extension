@@ -60,9 +60,10 @@ function secToHoSecMinFormat(timeInSec) {
 async function onDidReceiveMessage(event) {
   if (event.data.type && (event.data.type === "GET_CURRENT_TIME")) {
     var videoObject = document.getElementsByTagName("video")[0];
-    let currentTimeFormated = secToHoSecMinFormat(videoObject.currentTime);
+    let currentTimeSec = videoObject.currentTime
+    let currentTimeFormated = secToHoSecMinFormat(currentTimeSec);
     // send the massge 
-    window.postMessage({ type: "CURRENT_TIME_RESULT", videoCurrentTime: currentTimeFormated }, "*");
+    window.postMessage({ type: "CURRENT_TIME_RESULT", currentTimeFormated: currentTimeFormated, currentTimeSec: currentTimeSec }, "*");
   }
 }
 

@@ -5,12 +5,18 @@ const AddNoteForm = (props) => {
 
     const [title, setTitle] = useState('');
     const [tag, setTag] = useState('');
-    const [time, setTime] = useState('');
+    const [formatedTime, setFormatedTime] = useState('');
+    const [timeSec, setTimeSec] = useState('');
     const [content, setContent] = useState('');
 
 
     const onSubmit = (e) => {
         e.preventDefault()
+
+        let timeFormated = document.getElementById("time-input").value;
+
+        //TODO need update time sec too...
+
 
         if (!content) {
             alert('please add Content')
@@ -22,14 +28,13 @@ const AddNoteForm = (props) => {
             id: 10,
             title: title,
             content: content,
-            time:time,
+            time: timeFormated,
             tag: tag,
+            timeSec: props.timeSec,
         }
         props.addNote(newNote)
-
-
-
     }
+
     return(   
         <form className='add-form' onSubmit={onSubmit}>
             <div className="form-control">
@@ -50,8 +55,8 @@ const AddNoteForm = (props) => {
             </div>
             <div className="form-control">
                 <label>Time</label>
-                <input type='text' placeholder={props.time} value={props.time}
-                onChange= {(e)=> setTime(e.target.value)}></input> 
+                <input id="time-input" type='text' value={props.timeFormted}
+                onChange= {(e)=> setFormatedTime(e.target.value)}></input> 
             </div>
             <input type='submit' value='Save Note'/>
         </form>

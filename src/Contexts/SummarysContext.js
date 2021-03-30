@@ -2,14 +2,14 @@ import React from 'react';
 
 // TODO clear the notes defult
 export default React.createContext({
-    notes: [
+    notes:   [
         {
             id: 1,
             title: "What is your return policy?",
             content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." ,
             time:"0:45:03",
             tag: "definition",
-            timeSec: "1500"
+            timeSec: 2261.864352
         }, 
         {
             id:2,
@@ -17,7 +17,7 @@ export default React.createContext({
             content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
             time:"0:45:03",
             tag: "summary",
-            timeSec: "1501"
+            timeSec: 2262.864352
         },
         {
             id:3,
@@ -25,7 +25,7 @@ export default React.createContext({
             content: "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p></br><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>",
             time:"0:45:03",
             tag: "important",
-            timeSec: "1502"
+            timeSec: 2263.864352
         },
         {
             id:4,
@@ -33,7 +33,7 @@ export default React.createContext({
             content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
             time:"0:45:03",
             tag: "summary",
-            timeSec: "1503"
+            timeSec: 2264.864352
         },
         {
             id:5,
@@ -41,7 +41,7 @@ export default React.createContext({
             content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
             time:"0:45:03",
             tag: "summary",
-            timeSec: "1504"
+            timeSec: 2265.864352
         },
         {
             id:6,
@@ -49,8 +49,7 @@ export default React.createContext({
             content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
             time:"0:45:03",
             tag: "important",
-            timeSec: "1505"
-    
+            timeSec: 2266.864352
         }
     ],
     addNoteToSummary: note => {}, 

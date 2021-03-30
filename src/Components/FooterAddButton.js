@@ -8,7 +8,7 @@ const FooterAddButton = (props) => {
         <button onClick={props.getVideoCurrentTime} className="modal-button">
             Add Note
         </button>
-        <AddNoteForm time={props.videoCurrentTime} addNote={props.addNoteToSummary}/>
+        <AddNoteForm timeSec={props.currentTimeSec} timeFormted={props.currentTimeFormated} addNote={props.addNoteToSummary}/>
 
       </div>
     </footer>
