@@ -5,12 +5,13 @@ import { ModalContext } from '../Contexts/ModalProvider';
 import AccordionNotes from './AccordionNotes';
 import TitleAndDetails from './TitleAndDetails';
 import SummarysContext from "../Contexts/SummarysContext";
-
+import FooterAddButton from './FooterAddButton';
 
 
 
 const Modal = () => {
   
+// TODO clear the summaryState defult
 const [summaryState, setSummaryState] = useState(
   [
     {
@@ -58,14 +59,19 @@ const [summaryState, setSummaryState] = useState(
   ] 
 );
 
-const addNoteToSummary = note => {
-  console.log("add....", note)
-};
-
+/**
+ * Remove note with that "noteId" from SummarysContext
+ * 
+ * @param {int} noteId 
+ */
 const removeNoteFromSummary = noteId => {
-  console.log("Delete... ", noteId)
-
+  console.log("Delete... ", noteId);
+  setSummaryState(summaryState.filter((note) => note.id !== noteId))
 };
+
+const addNoteToSummary = note => {
+  console.log("add... ", note)
+}
 
 const closeVideoTagSection = () => {
   let videoTagSection = document.getElementById("video-tag-manger-section");
@@ -89,7 +95,6 @@ const closeVideoTagSection = () => {
               {/* save the all static (global) in this file */}
               <SummarysContext.Provider value={{
                 notes: summaryState,
-                addNoteToSummary: addNoteToSummary,
                 removeNoteFromSummary: removeNoteFromSummary
               }} >
                   <div className="modal-body">
@@ -102,20 +107,15 @@ const closeVideoTagSection = () => {
 
                     <TitleAndDetails></TitleAndDetails>
 
-                    <AccordionNotes></AccordionNotes>      
-                
-                  {/*TODO need to add button of new.. and create Footer component */}
-                  <footer className="footer">
-                    <div className="modal-content">
-                      <h3 className="time-format" >{videoCurrentTime}</h3>
-                      <button
-                        onClick={getVideoCurrentTime}
-                        className="modal-button"
-                      >
-                        Get Current Time
-                      </button>
-                    </div>
-                  </footer>
+                    <AccordionNotes></AccordionNotes>
+
+
+                    <FooterAddButton videoCurrentTime={videoCurrentTime}
+                     getVideoCurrentTime={getVideoCurrentTime}
+                     addNoteToSummary ={addNoteToSummary}
+                    ></FooterAddButton>     
+      
+                  
                   </div>
                 </SummarysContext.Provider>
               </div>

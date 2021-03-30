@@ -26,7 +26,6 @@ const AccordionNote = (props) => {
     setRotateState(
       setActive === "active" ? "accordion_icon" : "accordion_icon rotate"
     );
-
   }
 
   return (
@@ -36,7 +35,10 @@ const AccordionNote = (props) => {
         <p className="accordion_title">{props.title}</p>
         <div className="user-actions-icon">
           <FaRegEdit className="actions-icon"></FaRegEdit>
-          <FaTrash style={{cursor:'pointer'}} className="actions-icon" onClick={() =>props.removeFunction(props.id)} ></FaTrash>
+          <FaTrash style={{cursor:'pointer'}} className="actions-icon" onClick={() =>
+          // TODO change to-> https://dev.to/isarisariver/how-to-create-a-custom-confirm-box-with-react-754
+            window.confirm("Are you sure you wish to delete this item?") &&
+            props.removeFunction(props.id)} ></FaTrash>
 
           <Chevron className={`${setRotate}`} width={10} fill={"#777"} />
         </div>
