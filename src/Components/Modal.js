@@ -74,49 +74,59 @@ useEffect(() => {
   getNotes();
 }, [])
 
+var url = 'http://localhost:5000/notes';
+
 // Fetch requset: ask from some url the notes (async) 
 const fetchNotes = async () => {
-  let url = 'http://localhost:5000/notes';
   const response = await  fetch(url);
   const data = await response.json();
   console.log("fatch data from "+ url + "->>>>>  ",data);
   return data;
 }
 
-
-
 /**
- * Remove note with that "noteId" from SummarysContext
- * 
+ * Remove note - first delet loact at the state,  
+ * and than send delete http command
  * @param {int} noteId 
  */
-const removeNoteFromSummary = noteId => {
+const removeNoteFromSummary = async (noteId) => {
   console.log("Delete... ", noteId);
-  setSummaryState(summaryState.filter((note) => note.id_note !== noteId))
+  setSummaryState(summaryState.filter((note) => note.id !== noteId))
+
+  await fetch(url.concat(`/${noteId}`), {
+    method: 'DELETE'
+  })
 };
 
 
 /**
  * Create unique id and than add note to the summary
- * 
+ * add local to state and than fetch post
  * @param {} note 
  */
-const addNoteToSummary = note => {
+const addNoteToSummary = async (note) => {
   // 
   var isUniqueId = function() {
-    return summaryState.some(item => item.id_note === id_note);
+    return summaryState.some(item => item.id === id);
   }  
   do {
     // Get random id
-    var id_note = Math.floor(Math.random() * 10000) + 1;
+    var id = Math.floor(Math.random() * 10000) + 1;
     var found = isUniqueId();
-    console.log("id -> ", id_note, "found -> ", found); 
+    console.log("id -> ", id, "found -> ", found); 
   } while(found)
-  const newNote = {id_note, ...note};
+  const newNote = {id, ...note};
   console.log("add... ", newNote);
   setSummaryState([...summaryState, newNote]);
-}
 
+  const response = await fetch(url,
+    {
+      method: "POST",
+      headers: {'Content-type': 'application/json',
+    },
+    body: JSON.stringify(newNote)
+    }) 
+}
 
  //close the Editor section (extension)
 const closeVideoTagSection = () => {
