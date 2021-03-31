@@ -7,7 +7,11 @@ const FooterAddButton = (props) => {
   // get the currant time and show the form (fip the state)
   const clickedOnAddNote = () => {
     props.getVideoCurrentTime();
-    setShowForm(!showForm);
+
+    setTimeout(() => {
+      setShowForm(!showForm);
+
+    }, 500);
   }
   
   // TODO add Draggable...

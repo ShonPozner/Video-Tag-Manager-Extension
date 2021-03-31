@@ -3,20 +3,28 @@ import React, {useState} from "react"
 import "./addNoteForm.css";
 
 const AddNoteForm = (props) => {
-
-
-
     const [title, setTitle] = useState('');
     const [tag, setTag] = useState('');
-    const [formatedTime, setFormatedTime] = useState('');
+    const [formatedTime, setFormatedTime] = useState(props.timeFormted);
     const [timeSec, setTimeSec] = useState('');
     const [content, setContent] = useState('');
 
+    const onTodoChange = (value) => {
+        console.log("formatedTime", formatedTime);
+        console.log("change to : ",value);
+        setFormatedTime(value)
+        console.log("formatedTime affter set", formatedTime);
+        document.getElementById("time-input").value = value;
+
+    }
 
     const onSubmit = (e) => {
         e.preventDefault()
 
         let timeFormated = document.getElementById("time-input").value;
+        console.log("now value is ", timeFormated);
+        console.log("now state is ", formatedTime);
+
 
         //TODO need update time sec too...
     
@@ -48,8 +56,8 @@ const AddNoteForm = (props) => {
                 onChange= {(e)=> setTitle(e.target.value)}></input>
             </li>
             <li>
-                <input class="field-style field-split align-left" id="time-input" type='text' value={props.timeFormted}
-                onChange= {(e)=> setFormatedTime(e.target.value)}></input>
+                <input class="field-style field-split align-left" value={formatedTime} step="2" id="time-input" type='time'
+                onChange= {(e)=> onTodoChange(e.target.value)}></input>
                 <input class="field-style field-split align-right" type='text'  name="tag" placeholder="Add Tag" value={tag}
                 onChange= {(e)=> setTag(e.target.value)} list="tags"></input> 
                     <datalist id="tags">
