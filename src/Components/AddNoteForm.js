@@ -5,8 +5,8 @@ import "./addNoteForm.css";
 const AddNoteForm = (props) => {
     const [title, setTitle] = useState('');
     const [tag, setTag] = useState('');
-    // const [formatedTime, setFormatedTime] = useState(props.timeFormted);
-    const [formatedTime, setFormatedTime] = useState("00:00:00");
+    const [formatedTime, setFormatedTime] = useState(props.timeFormted);
+    // const [formatedTime, setFormatedTime] = useState("00:00:00");
     const [timeSec, setTimeSec] = useState('');
     const [content, setContent] = useState('');
 

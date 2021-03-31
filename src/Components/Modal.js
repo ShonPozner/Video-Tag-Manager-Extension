@@ -10,6 +10,8 @@ import FooterAddButton from './FooterAddButton';
 
 
 const Modal = () => {
+// TODO change to real backend server
+var url = 'http://localhost:5000/notes';
   
 // Default empty
 const [summaryState, setSummaryState] = useState(
@@ -65,7 +67,7 @@ const [summaryState, setSummaryState] = useState(
 ]
 );
 
-//in 
+// in setup fetch to get all notes
 useEffect(() => { 
   const getNotes = async () => {
     const notesFromServer = await fetchNotes();
@@ -74,11 +76,18 @@ useEffect(() => {
   getNotes();
 }, [])
 
-var url = 'http://localhost:5000/notes';
 
-// Fetch requset: ask from some url the notes (async) 
+// Fetch - get all requset (async) 
 const fetchNotes = async () => {
   const response = await  fetch(url);
+  const data = await response.json();
+  console.log("fatch data from "+ url + "->>>>>  ",data);
+  return data;
+}
+
+// Fetch - get some specific note requset (async) 
+const fetchNote = async (noteId) => {
+  const response = await  fetch(url+ `/${noteId}`);
   const data = await response.json();
   console.log("fatch data from "+ url + "->>>>>  ",data);
   return data;
@@ -97,7 +106,6 @@ const removeNoteFromSummary = async (noteId) => {
     method: 'DELETE'
   })
 };
-
 
 /**
  * Create unique id and than add note to the summary
@@ -119,6 +127,7 @@ const addNoteToSummary = async (note) => {
   console.log("add... ", newNote);
   setSummaryState([...summaryState, newNote]);
 
+  // send post to server
   const response = await fetch(url,
     {
       method: "POST",
@@ -126,6 +135,12 @@ const addNoteToSummary = async (note) => {
     },
     body: JSON.stringify(newNote)
     }) 
+}
+
+// TODO need to coding update method...
+const updateNote = async (noteId) => {
+  const noteThatUpdating = await fetchNote(noteId);
+  console.log("befor update - ", noteThatUpdating);
 }
 
  //close the Editor section (extension)
