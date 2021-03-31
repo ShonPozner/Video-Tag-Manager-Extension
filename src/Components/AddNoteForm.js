@@ -9,25 +9,29 @@ const AddNoteForm = (props) => {
     const [timeSec, setTimeSec] = useState('');
     const [content, setContent] = useState('');
 
-    const onTodoChange = (value) => {
-        console.log("formatedTime", formatedTime);
-        console.log("change to : ",value);
-        setFormatedTime(value)
-        console.log("formatedTime affter set", formatedTime);
-        document.getElementById("time-input").value = value;
+    // const onTodoChange = (value) => {
+    //     console.log("formatedTime", formatedTime);
+    //     console.log("change to : ",value);
+    //     setFormatedTime(value)
+    //     console.log("formatedTime affter set", formatedTime);
+    //     document.getElementById("time-input").value = value;
 
-    }
+    // }
 
     const onSubmit = (e) => {
         e.preventDefault()
 
-        let timeFormated = document.getElementById("time-input").value;
-        console.log("now value is ", timeFormated);
-        console.log("now state is ", formatedTime);
+        // let timeFormated = document.getElementById("time-input").value;
+        // console.log("now value is ", timeFormated);
+        // console.log("now state is ", formatedTime);
 
 
-        //TODO need update time sec too...
-    
+        let tempSecTime = formatedTime.split(':'); // split it at the colons
+
+        // minutes are worth 60 seconds. Hours are worth 60 minutes.
+        let timeSecFormat = (+tempSecTime[0]) * 60 * 60 + (+tempSecTime[1]) * 60 + (+tempSecTime[2]); 
+        console.log(timeSecFormat);
+        setTimeSec(timeSecFormat);
 
 
         if (!content) {
@@ -40,9 +44,9 @@ const AddNoteForm = (props) => {
             id: 1,
             title: title,
             content: content,
-            time: timeFormated,
+            time: formatedTime,
             tag: tag,
-            timeSec: props.timeSec,
+            timeSec: timeSec,
         }
         props.addNote(newNote)
         props.setShowFromState(false)
@@ -57,7 +61,7 @@ const AddNoteForm = (props) => {
             </li>
             <li>
                 <input class="field-style field-split align-left" value={formatedTime} step="2" id="time-input" type='time'
-                onChange= {(e)=> onTodoChange(e.target.value)}></input>
+                onChange= {(e)=> setFormatedTime(e.target.value)}></input>
                 <input class="field-style field-split align-right" type='text'  name="tag" placeholder="Add Tag" value={tag}
                 onChange= {(e)=> setTag(e.target.value)} list="tags"></input> 
                     <datalist id="tags">
@@ -67,7 +71,6 @@ const AddNoteForm = (props) => {
                     <option>Def</option>
                     <option>Back</option>
                     </datalist>
-                {/* TODO add + and - time and buttom this time */}
             </li>
             <li>
                 <textarea name="content" class="field-style" placeholder="Add Content" value={content}
