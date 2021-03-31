@@ -84,10 +84,12 @@
 }
 
 .modal-body {
-  display: flex;
+  display: block;
   flex-direction: column;
   position: relative;
   min-height: 100vh;
+  max-width: 500px;
+  min-width: 200px;
 }
 
 .modal-button {
@@ -100,7 +102,7 @@
   font-size: 14px;
   font-weight: 600;
   height: 30px;
-  width: 100px;
+  width: 50%;
 }
 
 .footer {
@@ -114,6 +116,7 @@
 
 .accordion-notes {
   padding-bottom:0rem; 
+  width: 375px;
 }
 
 .btn-close {

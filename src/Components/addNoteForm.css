@@ -72,3 +72,12 @@
 	background-color: #28739E;
 }
 
+.Editor {
+	width: 320px;
+	height: min-content;
+	color: black;
+}
+
+.Editor p{
+	margin: 0px;
+}

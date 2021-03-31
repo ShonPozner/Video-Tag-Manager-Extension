@@ -1,12 +1,16 @@
 import React, {useState} from "react"
-
+// import { Editor } from 'react-draft-wysiwyg';
+// import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+// import { EditorState, convertToRaw } from 'draft-js';
 import "./addNoteForm.css";
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 const AddNoteForm = (props) => {
     const [title, setTitle] = useState('');
     const [tag, setTag] = useState('');
-    const [formatedTime, setFormatedTime] = useState(props.timeFormted);
-    // const [formatedTime, setFormatedTime] = useState("00:00:00");
+    // const [formatedTime, setFormatedTime] = useState(props.timeFormted);
+    const [formatedTime, setFormatedTime] = useState("00:00:00");
     const [timeSec, setTimeSec] = useState('');
     const [content, setContent] = useState('');
 
@@ -53,12 +57,30 @@ const AddNoteForm = (props) => {
                     <option>Summary</option>
                     <option>Important</option>
                     <option>Def</option>
-                    <option>Back</option>
+                    <option>Repeat</option>
                     </datalist>
             </li>
             <li>
-                <textarea name="content" className="field-style" placeholder="Add Content" value={content}
-                onChange= {(e)=> setContent(e.target.value)}></textarea>
+                {/* <textarea name="content" className="field-style" placeholder="Add Content" value={content}
+                    onChange= {(e)=> setContent(e.target.value)}></textarea> */}
+                <div className="Editor">
+                    <CKEditor
+                        editor={ ClassicEditor}
+                        data={content}
+
+                        onChange={ ( event, editor ) => {
+                            const data = editor.getData();
+                            console.log( { event, editor, data } );
+                            setContent(data)
+                        } }
+                        // onBlur={ ( event, editor ) => {
+                        //     console.log( 'Blur.', editor );
+                        // } }
+                        // onFocus={ ( event, editor ) => {
+                        //     console.log( 'Focus.', editor );
+                        // } }
+                    />
+                </div>
             </li>
             <li>
                 <input type='submit' value='Save Note'/>

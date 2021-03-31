@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import React, { useState, useRef } from "react";
 import Chevron from "./Chevron";
 import {FaRegEdit, FaTrash} from 'react-icons/fa'
-
+import parse from 'html-react-parser';
 import "./AccordionNote.css";
 
 // Hooks...
@@ -51,10 +51,9 @@ const AccordionNote = (props) => {
       >
         <div className="accordion_content">
           <h3 className="accordion_time">{props.time}</h3>
-          <div
-            className="accordion_text"
-            dangerouslySetInnerHTML={{ __html: props.content }}
-          />
+          <div className="accordion_text">
+              <p>{parse(props.content)}</p>
+            </div>
         </div>
       </div>
     </div>

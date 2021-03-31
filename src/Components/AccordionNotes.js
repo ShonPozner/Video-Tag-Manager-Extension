@@ -15,7 +15,7 @@ const AccordionNotes = () => {
                      id={note.id}  tag={note.tag} title={note.title} time={note.time}
                     content={note.content}/>
                 )): <AccordionNote removeFunction={context.removeNoteFromSummary}
-                    id={0} title="Start Your Summary (edit me)" time="00:00:00"/>
+                    id={0} title="Start Your Summary (edit me)" time="00:00:00" content={'<p>Enter you text here</p>'}/>
             }
             </div>
             )}
