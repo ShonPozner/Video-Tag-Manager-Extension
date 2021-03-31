@@ -2,13 +2,14 @@ import React, {useState} from "react";
 import AddNoteForm from './AddNoteForm';
 
 const FooterAddButton = (props) => {
-  const [showForm, setShowForm] = useState(false);
+  const [showAddNoteForm, setShowAddNoteForm] = useState(false);
 
   // get the currant time and show the form (fip the state)
   const clickedOnAddNote = () => {
     props.getVideoCurrentTime();
+
     setTimeout(() => {
-      setShowForm(!showForm);
+      setShowAddNoteForm(!showAddNoteForm);
     }, 200);
   }
   
@@ -16,12 +17,12 @@ const FooterAddButton = (props) => {
   return (
     <footer className="footer">
       <div className="modal-content">
-        {showForm && <AddNoteForm timeSec={props.currentTimeSec} timeFormted={props.currentTimeFormated}
-         addNote={props.addNoteToSummary} setShowFromState={setShowForm} />}
          {/* TODO style buttton to icon in the botoom? and hiide affter clicked */}
-        <button onClick={() => clickedOnAddNote(props)} className="modal-button">
-            Add Note
-        </button>
+        <input type="button" onClick={() => clickedOnAddNote(props)} className={`modal-button ${!showAddNoteForm ? '' : "btn-close"}`}
+        value ={!showAddNoteForm ? 'Add Note': 'Close'}/>
+                {showAddNoteForm && <AddNoteForm timeSec={props.currentTimeSec} timeFormted={props.currentTimeFormated}
+         addNote={props.addNoteToSummary} setShowFromState={setShowAddNoteForm} />}
+
 
       </div>
     </footer>

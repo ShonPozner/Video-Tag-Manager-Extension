@@ -64,7 +64,7 @@
   flex-direction: column;
   align-items: center;
   color: white;
-  padding: 0.5rem .5rem 0rem .5rem;
+  padding: 0.5rem .5rem 2px .5rem;
   font-size: 14px;
   line-height: 24px;
   overflow: auto;
@@ -116,3 +116,6 @@
   padding-bottom:0rem; 
 }
 
+.btn-close {
+  /* background: red; */
+}

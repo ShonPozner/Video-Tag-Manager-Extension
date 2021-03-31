@@ -75,10 +75,30 @@ const removeNoteFromSummary = noteId => {
   setSummaryState(summaryState.filter((note) => note.id !== noteId))
 };
 
+
+/**
+ * Create unique id and than add note to the summary
+ * 
+ * @param {} note 
+ */
 const addNoteToSummary = note => {
-  console.log("add... ", note)
+  // 
+  var isUniqueId = function() {
+    return summaryState.some(item => item.id === newId);
+  }  
+  do {
+    // Get random id
+    var newId = Math.floor(Math.random() * 10000) + 1;
+    var found = isUniqueId();
+    console.log("id -> ", newId, "found -> ", found); 
+  } while(found)
+  const newNote = {newId, ...note};
+  console.log("add... ", newNote);
+  setSummaryState([...summaryState, newNote]);
 }
 
+
+ //close the Editor section (extension)
 const closeVideoTagSection = () => {
   let videoTagSection = document.getElementById("video-tag-manger-section");
   console.log(videoTagSection)
@@ -114,7 +134,6 @@ const closeVideoTagSection = () => {
                     <TitleAndDetails></TitleAndDetails>
 
                     <AccordionNotes></AccordionNotes>
-
 
                     <FooterAddButton 
                      currentTimeFormated={currentTimeFormated}
