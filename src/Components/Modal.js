@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, {useState, useEffect} from "react";
 import { X } from 'react-feather';
 import Draggable from 'react-draggable';
 import { ModalContext } from '../Contexts/ModalProvider';
@@ -11,59 +11,79 @@ import FooterAddButton from './FooterAddButton';
 
 const Modal = () => {
   
-// TODO clear the summaryState defult
+// Default empty
 const [summaryState, setSummaryState] = useState(
   [
-    {
-        id: 1,
-        title: "What is your return policy?",
-        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." ,
-        time:"0:45:03",
-        tag: "definition",
-        timeSec: 2261.864352
-    }, 
-    {
-        id:2,
-        title: "Which languages does you support?,",
-        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        time:"0:45:03",
-        tag: "summary",
-        timeSec: 2262.864352
-    },
-    {
-        id:3,
-        title: "Can I use a custom domain?",
-        content: "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p></br><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>",
-        time:"0:45:03",
-        tag: "important",
-        timeSec: 2263.864352
-    },
-    {
-        id:4,
-        title: "Which languages does you support?",
-        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        time:"0:45:03",
-        tag: "summary",
-        timeSec: 2264.864352
-    },
-    {
-        id:5,
-        title: "",
-        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        time:"0:45:03",
-        tag: "summary",
-        timeSec: 2265.864352
-    },
-    {
-        id:6,
-        title: "da",
-        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        time:"0:45:03",
-        tag: "important",
-        timeSec: 2266.864352
-    }
+    // {
+    //     id: 1,
+    //     title: "What is your return policy?",
+    //     content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." ,
+    //     time:"0:45:03",
+    //     tag: "definition",
+    //     timeSec: 2261.864352
+    // }, 
+    // {
+    //     id:2,
+    //     title: "Which languages does you support?,",
+    //     content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    //     time:"0:45:03",
+    //     tag: "summary",
+    //     timeSec: 2262.864352
+    // },
+    // {
+    //     id:3,
+    //     title: "Can I use a custom domain?",
+    //     content: "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p></br><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>",
+    //     time:"0:45:03",
+    //     tag: "important",
+    //     timeSec: 2263.864352
+    // },
+    // {
+    //     id:4,
+    //     title: "Which languages does you support?",
+    //     content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    //     time:"0:45:03",
+    //     tag: "summary",
+    //     timeSec: 2264.864352
+    // },
+    // {
+    //     id:5,
+    //     title: "",
+    //     content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    //     time:"0:45:03",
+    //     tag: "summary",
+    //     timeSec: 2265.864352
+    // },
+    // {
+    //     id:6,
+    //     title: "da",
+    //     content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    //     time:"0:45:03",
+    //     tag: "important",
+    //     timeSec: 2266.864352
+    // }
 ]
 );
+
+//in 
+useEffect(() => { 
+  const getNotes = async () => {
+    const notesFromServer = await fetchNotes();
+    setSummaryState(notesFromServer)
+  }
+  getNotes();
+}, [])
+
+// Fetch requset: ask from some url the notes (async) 
+const fetchNotes = async () => {
+  let url = 'http://localhost:5000/notes';
+  const response = await  fetch(url);
+  const data = await response.json();
+  console.log("fatch data from "+ url + "->>>>>  ",data);
+  return data;
+}
+
+
 
 /**
  * Remove note with that "noteId" from SummarysContext
@@ -72,7 +92,7 @@ const [summaryState, setSummaryState] = useState(
  */
 const removeNoteFromSummary = noteId => {
   console.log("Delete... ", noteId);
-  setSummaryState(summaryState.filter((note) => note.id !== noteId))
+  setSummaryState(summaryState.filter((note) => note.id_note !== noteId))
 };
 
 
@@ -84,15 +104,15 @@ const removeNoteFromSummary = noteId => {
 const addNoteToSummary = note => {
   // 
   var isUniqueId = function() {
-    return summaryState.some(item => item.id === newId);
+    return summaryState.some(item => item.id_note === id_note);
   }  
   do {
     // Get random id
-    var newId = Math.floor(Math.random() * 10000) + 1;
+    var id_note = Math.floor(Math.random() * 10000) + 1;
     var found = isUniqueId();
-    console.log("id -> ", newId, "found -> ", found); 
+    console.log("id -> ", id_note, "found -> ", found); 
   } while(found)
-  const newNote = {newId, ...note};
+  const newNote = {id_note, ...note};
   console.log("add... ", newNote);
   setSummaryState([...summaryState, newNote]);
 }
