@@ -102,7 +102,7 @@ const removeNoteFromSummary = async (noteId) => {
   console.log("Delete... ", noteId);
   setSummaryState(summaryState.filter((note) => note.id !== noteId))
 
-  await fetch(url.concat(`/${noteId}`), {
+  await fetch(url + `/${noteId}`, {
     method: 'DELETE'
   })
 };
@@ -141,6 +141,18 @@ const addNoteToSummary = async (note) => {
 const updateNote = async (noteId) => {
   const noteThatUpdating = await fetchNote(noteId);
   console.log("befor update - ", noteThatUpdating);
+
+  // add updade function local and create change to newNote
+  const newNote = {...noteThatUpdating, } //todo
+  
+  const response = await fetch(url +`/${noteId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-type': 'application/json'
+    },
+    body: JSON.stringify(newNote)
+  })
+  const data = await response.json()
 }
 
  //close the Editor section (extension)

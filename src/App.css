@@ -103,6 +103,7 @@
   font-weight: 600;
   height: 30px;
   width: 50%;
+  cursor: pointer;
 }
 
 .footer {
@@ -121,4 +122,8 @@
 
 .btn-close {
   /* background: red; */
+}
+
+.ck-editor__editable {
+  min-height: 120px;
 }

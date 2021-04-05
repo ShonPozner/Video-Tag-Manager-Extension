@@ -9,19 +9,15 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 const AddNoteForm = (props) => {
     const [title, setTitle] = useState('');
     const [tag, setTag] = useState('');
-    // const [formatedTime, setFormatedTime] = useState(props.timeFormted);
-    const [formatedTime, setFormatedTime] = useState("00:00:00");
-    const [timeSec, setTimeSec] = useState('');
+    const [formatedTime, setFormatedTime] = useState(props.timeFormted);
+    // const [formatedTime, setFormatedTime] = useState("00:00:00");
+    // const [timeSec, setTimeSec] = useState('');
     const [content, setContent] = useState('');
 
 
     const onSubmit = (e) => {
 
         e.preventDefault();
-        let tempSecTime = formatedTime.split(':'); 
-        // minutes are worth 60 seconds. Hours are worth 60 minutes.
-        let timeSecFormat = (+tempSecTime[0]) * 60 * 60 + (+tempSecTime[1]) * 60 + (+tempSecTime[2]); 
-        setTimeSec(timeSecFormat);
         
         if (!content) {
             alert('please add Content')
@@ -34,10 +30,19 @@ const AddNoteForm = (props) => {
             content: content,
             time: formatedTime,
             tag: tag,
-            timeSec: timeSec,
+            timeSec: getSecTime(),
         }
+
+        console.log("try" ,newNote)
         props.addNote(newNote)
         props.setShowFromState(false)
+    }
+
+    const getSecTime = () => {
+        let tempSecTime = formatedTime.split(':'); 
+        // minutes are worth 60 seconds. Hours are worth 60 minutes.
+        let timeSecFormat = (+tempSecTime[0]) * 60 * 60 + (+tempSecTime[1]) * 60 + (+tempSecTime[2]); 
+        return(timeSecFormat)
     }
 
     return(   
@@ -73,12 +78,6 @@ const AddNoteForm = (props) => {
                             console.log( { event, editor, data } );
                             setContent(data)
                         } }
-                        // onBlur={ ( event, editor ) => {
-                        //     console.log( 'Blur.', editor );
-                        // } }
-                        // onFocus={ ( event, editor ) => {
-                        //     console.log( 'Focus.', editor );
-                        // } }
                     />
                 </div>
             </li>

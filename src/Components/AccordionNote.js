@@ -50,7 +50,13 @@ const AccordionNote = (props) => {
         className="accordion_content"
       >
         <div className="accordion_content">
-          <h3 className="accordion_time">{props.time}</h3>
+          <h3 className="accordion_time" onClick={() => {
+            var vid = document.querySelectorAll('video')[0];
+            if (typeof vid !== 'undefined') {
+              vid.currentTime = props.timeSec;
+            }
+          }}
+          >{props.time}</h3>
           <div className="accordion_text">
               <p>{parse(props.content)}</p>
             </div>
