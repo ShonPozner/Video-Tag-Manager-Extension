@@ -81,3 +81,9 @@
 .Editor p{
 	margin: 0px;
 }
+
+.Editor h1,h2,h3,h4 {
+	color: black;
+	text-align: left;
+
+}
