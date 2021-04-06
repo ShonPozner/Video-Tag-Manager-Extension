@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import { X } from 'react-feather';
 import Draggable from 'react-draggable';
 import { ModalContext } from '../Contexts/ModalProvider';
@@ -6,12 +6,18 @@ import AccordionNotes from './AccordionNotes';
 import TitleAndDetails from './TitleAndDetails';
 import SummarysContext from "../Contexts/SummarysContext";
 import FooterAddButton from './FooterAddButton';
+import Resizable from '../Hooks/Resizable';
+
+import { Direction } from '../Hooks/constants';
 
 
 
 const Modal = () => {
 // TODO change to real backend server
 var url = 'http://localhost:5000/notes';
+
+const modalRef = useRef(null);
+
   
 // Default empty
 const [summaryState, setSummaryState] = useState(
@@ -162,6 +168,79 @@ const closeVideoTagSection = () => {
   videoTagSection.remove();
 };
 
+const handleResize = (direction, movementX, movementY) => {
+  const modalSection = modalRef
+  .current;
+  if (!modalSection) return;
+
+  const { width, height, x, y } = modalSection.getBoundingClientRect();
+
+  // const resizeTop = () => {
+  //   modalSection.style.height = `${height - movementY}px`;
+  //   modalSection.style.top = `${y + movementY}px`;
+  // };
+
+  // const resizeRight = () => {
+  //   modalSection.style.width = `${width + movementX}px`;
+  // };
+
+  // const resizeBottom = () => {
+  //   modalSection.style.height = `${height + movementY}px`;
+  // };
+
+  const resizeLeft = () => {
+    modalSection.style.width = `${Math.max(Math.min(width - movementX,600),250)}px`;
+    console.log();
+    // modalSection.style.left = `${x + movementX}px`;
+  };
+
+  switch (direction) {
+    // case Direction.TopLeft:
+    //   resizeTop();
+    //   resizeLeft();
+    //   break;
+
+    // case Direction.Top:
+    //   resizeTop();
+    //   break;
+
+    // case Direction.TopRight:
+    //   resizeTop();
+    //   resizeRight();
+    //   break;
+
+    // case Direction.Right:
+    //   resizeRight();
+    //   break;
+
+    // case Direction.BottomRight:
+    //   resizeBottom();
+    //   resizeRight();
+    //   break;
+
+    // case Direction.Bottom:
+    //   resizeBottom();
+    //   break;
+
+    // case Direction.BottomLeft:
+    //   resizeBottom();
+    //   resizeLeft();
+    //   break;
+
+    case Direction.Left:
+      resizeLeft();
+      break;
+
+    default:
+      break;
+    }
+};
+
+
+
+
+
+
   return (
     <ModalContext.Consumer>
       {({ windowPosition, hasDraggedWindowPosition, currentTimeSec, currentTimeFormated, getVideoCurrentTime}) => (
@@ -173,13 +252,14 @@ const closeVideoTagSection = () => {
           <div id="modal" className="modal-window" style={{
             transform: windowPosition,
         }}>
-            <div className="modal-window-inner-border">
+            <div className="modal-window-inner-border" ref={modalRef}>
 
               {/* save the all static (global) in this file */}
               <SummarysContext.Provider value={{
                 notes: summaryState,
                 removeNoteFromSummary: removeNoteFromSummary
               }} >
+                <Resizable onResize={handleResize} ></Resizable>
                   <div className="modal-body">
                     {/*TODO need to add someting? and make Top component */}
                     <div className="modal-handle">

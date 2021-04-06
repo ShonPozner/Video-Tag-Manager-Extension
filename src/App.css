@@ -11,6 +11,7 @@
 }
 
 .modal-window {
+  box-sizing: border-box;
   pointer-events: all;
   top: 0;
   left: 0;

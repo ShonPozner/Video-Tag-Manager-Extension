@@ -9,7 +9,7 @@ import ModalProvider from './Contexts/ModalProvider';
 function App() {
   return (
     <ModalProvider>
-      <Modal />
+      <Modal/>
     </ModalProvider>
   );
 }
