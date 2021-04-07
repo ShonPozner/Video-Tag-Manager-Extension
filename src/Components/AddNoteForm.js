@@ -1,7 +1,4 @@
 import React, {useState} from "react"
-// import { Editor } from 'react-draft-wysiwyg';
-// import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-// import { EditorState, convertToRaw } from 'draft-js';
 import "./addNoteForm.css";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -33,7 +30,6 @@ const AddNoteForm = (props) => {
             timeSec: getSecTime(),
         }
 
-        console.log("try" ,newNote)
         props.addNote(newNote)
         props.setShowFromState(false)
     }
@@ -66,8 +62,6 @@ const AddNoteForm = (props) => {
                     </datalist>
             </li>
             <li>
-                {/* <textarea name="content" className="field-style" placeholder="Add Content" value={content}
-                    onChange= {(e)=> setContent(e.target.value)}></textarea> */}
                 <div className="Editor">
                     <CKEditor
                         editor={ ClassicEditor}
@@ -75,7 +69,7 @@ const AddNoteForm = (props) => {
 
                         onChange={ ( event, editor ) => {
                             const data = editor.getData();
-                            console.log( { event, editor, data } );
+                            // console.log( { event, editor, data } );
                             setContent(data)
                         } }
                     />

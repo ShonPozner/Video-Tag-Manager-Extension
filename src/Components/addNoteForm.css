@@ -82,8 +82,10 @@
 	margin: 0px;
 }
 
-.Editor h1,h2,h3,h4 {
+.Editor h1,  
+.Editor h2,  
+.Editor h3,  
+.Editor h4 {
 	color: black;
-	text-align: left;
-
-}
+	text-align: left;	
+}  

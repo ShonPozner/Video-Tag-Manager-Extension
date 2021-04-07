@@ -77,7 +77,9 @@ const [summaryState, setSummaryState] = useState(
 useEffect(() => { 
   const getNotes = async () => {
     const notesFromServer = await fetchNotes();
-    setSummaryState(notesFromServer)
+    console.log(notesFromServer);
+    setSummaryState(notesFromServer.sort((a, b) => 
+      a.timeSec > b.timeSec ? 1 : -1));
   }
   getNotes();
 }, [])
@@ -100,7 +102,7 @@ const fetchNote = async (noteId) => {
 }
 
 /**
- * Remove note - first delet loact at the state,  
+ * Remove note - first delete loacl (state),  
  * and than send delete http command
  * @param {int} noteId 
  */
@@ -131,7 +133,11 @@ const addNoteToSummary = async (note) => {
   } while(found)
   const newNote = {id, ...note};
   console.log("add... ", newNote);
-  setSummaryState([...summaryState, newNote]);
+  const newStateSummary = [...summaryState, newNote].sort((a, b) => {
+    return a.timeSec > b.timeSec ? 1 : -1;
+  });
+
+  setSummaryState(newStateSummary);
 
   // send post to server
   const response = await fetch(url,
@@ -175,57 +181,57 @@ const handleResize = (direction, movementX, movementY) => {
 
   const { width, height, x, y } = modalSection.getBoundingClientRect();
 
-  // const resizeTop = () => {
-  //   modalSection.style.height = `${height - movementY}px`;
-  //   modalSection.style.top = `${y + movementY}px`;
-  // };
+  const resizeTop = () => {
+    modalSection.style.height = `${height - movementY}px`;
+    modalSection.style.top = `${y + movementY}px`;
+  };
 
-  // const resizeRight = () => {
-  //   modalSection.style.width = `${width + movementX}px`;
-  // };
+  const resizeRight = () => {
+    modalSection.style.width = `${width + movementX}px`;
+  };
 
-  // const resizeBottom = () => {
-  //   modalSection.style.height = `${height + movementY}px`;
-  // };
+  const resizeBottom = () => {
+    modalSection.style.height = `${height + movementY}px`;
+  };
 
   const resizeLeft = () => {
-    modalSection.style.width = `${Math.max(Math.min(width - movementX,600),250)}px`;
+    modalSection.style.width = `${width - movementX}px`;
     console.log();
-    // modalSection.style.left = `${x + movementX}px`;
+    modalSection.style.left = `${x + movementX}px`;
   };
 
   switch (direction) {
-    // case Direction.TopLeft:
-    //   resizeTop();
-    //   resizeLeft();
-    //   break;
+    case Direction.TopLeft:
+      resizeTop();
+      resizeLeft();
+      break;
 
-    // case Direction.Top:
-    //   resizeTop();
-    //   break;
+    case Direction.Top:
+      resizeTop();
+      break;
 
-    // case Direction.TopRight:
-    //   resizeTop();
-    //   resizeRight();
-    //   break;
+    case Direction.TopRight:
+      resizeTop();
+      resizeRight();
+      break;
 
-    // case Direction.Right:
-    //   resizeRight();
-    //   break;
+    case Direction.Right:
+      resizeRight();
+      break;
 
-    // case Direction.BottomRight:
-    //   resizeBottom();
-    //   resizeRight();
-    //   break;
+    case Direction.BottomRight:
+      resizeBottom();
+      resizeRight();
+      break;
 
-    // case Direction.Bottom:
-    //   resizeBottom();
-    //   break;
+    case Direction.Bottom:
+      resizeBottom();
+      break;
 
-    // case Direction.BottomLeft:
-    //   resizeBottom();
-    //   resizeLeft();
-    //   break;
+    case Direction.BottomLeft:
+      resizeBottom();
+      resizeLeft();
+      break;
 
     case Direction.Left:
       resizeLeft();
@@ -239,8 +245,6 @@ const handleResize = (direction, movementX, movementY) => {
 
 
 
-
-
   return (
     <ModalContext.Consumer>
       {({ windowPosition, hasDraggedWindowPosition, currentTimeSec, currentTimeFormated, getVideoCurrentTime}) => (
@@ -249,7 +253,7 @@ const handleResize = (direction, movementX, movementY) => {
           defaultPosition={{x: windowPosition.x, y: windowPosition.y}}
           position={hasDraggedWindowPosition ? { x: windowPosition.x, y: windowPosition.y } : null}
         >
-          <div id="modal" className="modal-window" style={{
+          <div id="modal" className="modal-window custom-scrollba" style={{
             transform: windowPosition,
         }}>
             <div className="modal-window-inner-border" ref={modalRef}>
