@@ -14,7 +14,7 @@ import { Direction } from '../Hooks/constants';
 
 const Modal = () => {
 // TODO change to real backend server
-var url = 'http://localhost:5000/notes';
+var url = 'http://localhost:5000/';
 
 const modalRef = useRef(null);
 
@@ -72,33 +72,50 @@ const [summaryState, setSummaryState] = useState(
     // }
 ]
 );
+const [summaryId, setSummaryId] = useState(1);
+const [notes, setNotes] = useState([]);
+
 
 // in setup fetch to get all notes
 useEffect(() => { 
-  const getNotes = async () => {
+  const getSummary = async () => {
+    const summaryFromServer = await fetchSummary();
+    console.log(summaryFromServer);
+    // setNotes(notesFromServer.sort((a, b) => 
+    //   a.timeSec > b.timeSec ? 1 : -1));
+    setSummaryState(summaryFromServer);
+    setSummaryId(summaryFromServer.id);
     const notesFromServer = await fetchNotes();
     console.log(notesFromServer);
-    setSummaryState(notesFromServer.sort((a, b) => 
-      a.timeSec > b.timeSec ? 1 : -1));
-  }
-  getNotes();
+    setNotes(notesFromServer.sort((a, b) => 
+      a.timeSec > b.timeSec ? 1 : -1));  }
+  getSummary();
 }, [])
 
 
 // Fetch - get all requset (async) 
-const fetchNotes = async () => {
-  const response = await  fetch(url);
+const fetchSummary = async () => {
+  const response = await  fetch(url + "summarys?url=www.zoom");
   const data = await response.json();
   console.log("fatch data from "+ url + "->>>>>  ",data);
   return data;
 }
 
-// Fetch - get some specific note requset (async) 
-const fetchNote = async (noteId) => {
-  const response = await  fetch(url+ `/${noteId}`);
+// Fetch - get all requset (async) 
+const fetchNotes = async () => {
+  const response = await  fetch(url + `summarys/${summaryId}/notes`);
   const data = await response.json();
   console.log("fatch data from "+ url + "->>>>>  ",data);
   return data;
+}
+
+
+// Fetch - get some specific note requset (async) 
+const fetchNote = async (noteId) => {
+  const response = await  fetch(url+`summarys/${summaryId}/notes`);
+  const data = await response.json();
+  console.log("fatch data from "+ url + "->>>>>  ",data);
+  return data.find(({id}) => id === noteId);
 }
 
 /**
@@ -108,9 +125,9 @@ const fetchNote = async (noteId) => {
  */
 const removeNoteFromSummary = async (noteId) => {
   console.log("Delete... ", noteId);
-  setSummaryState(summaryState.filter((note) => note.id !== noteId))
+  setNotes(notes.filter((note) => note.id !== noteId))
 
-  await fetch(url + `/${noteId}`, {
+  await fetch(url+`notes/${noteId}`, {
     method: 'DELETE'
   })
 };
@@ -123,24 +140,24 @@ const removeNoteFromSummary = async (noteId) => {
 const addNoteToSummary = async (note) => {
   // 
   var isUniqueId = function() {
-    return summaryState.some(item => item.id === id);
+    return notes.some(item => item.id === id);
   }  
   do {
     // Get random id
-    var id = Math.floor(Math.random() * 10000) + 1;
+    var id = Math.floor(Math.random() * 10000000) + 1;
     var found = isUniqueId();
     console.log("id -> ", id, "found -> ", found); 
   } while(found)
   const newNote = {id, ...note};
   console.log("add... ", newNote);
-  const newStateSummary = [...summaryState, newNote].sort((a, b) => {
+  const newStateNotes = [...notes, newNote].sort((a, b) => {
     return a.timeSec > b.timeSec ? 1 : -1;
   });
 
-  setSummaryState(newStateSummary);
+  setNotes(newStateNotes);
 
   // send post to server
-  const response = await fetch(url,
+  const response = await fetch(url+ "notes",
     {
       method: "POST",
       headers: {'Content-type': 'application/json',
@@ -157,7 +174,7 @@ const updateNote = async (noteId) => {
   // add updade function local and create change to newNote
   const newNote = {...noteThatUpdating, } //todo
   
-  const response = await fetch(url +`/${noteId}`, {
+  const response = await fetch(url +`notes/${noteId}`, {
     method: 'PUT',
     headers: {
       'Content-type': 'application/json'
@@ -260,7 +277,7 @@ const handleResize = (direction, movementX, movementY) => {
 
               {/* save the all static (global) in this file */}
               <SummarysContext.Provider value={{
-                notes: summaryState,
+                notes: notes,
                 removeNoteFromSummary: removeNoteFromSummary
               }} >
                 <Resizable onResize={handleResize} ></Resizable>
