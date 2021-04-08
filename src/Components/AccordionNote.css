@@ -124,17 +124,44 @@ border-radius: 4px;
   margin: 6px 0px 8px 10px;
 
 }
-.info-icon {
+.list-tags .li-icon-info {
 float: right;
 margin-right: 20px;
 margin-top: 2px;
 cursor: help;
 margin-right: 4px;
+position: relative;
+display: inline-block;
 }
 .item-tag{
   border: 1px solid rgb(197, 167, 167)!important;
 
 }
+
+
+.li-icon-info span{
+  visibility: hidden;
+  width: 180px;
+  background-color: rgba(58, 61, 77, 1);;
+
+  color: rgb(221, 220, 220);
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: -35px;
+  right: 20px;
+}
+
+.li-icon-info:hover span{
+  visibility: visible;
+}
+
+
+
 
 /* .list-tags li:nth-child(odd) 
     { 

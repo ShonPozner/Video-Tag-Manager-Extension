@@ -1,6 +1,7 @@
 import React from 'react'
 import{BsInfoCircle} from 'react-icons/bs'
 import SummarysContext from "../Contexts/SummarysContext";
+import {FormatedTime} from "../Hooks/constants";
 
 
 // TODO add props or state of tag and title name
@@ -19,7 +20,15 @@ function TitleAndDetails() {
                                 {summary.tags.map(tag=> (
                                     <li className="item-tag">{tag}</li>
                                 ))}
-                                <li><BsInfoCircle className='info-icon'></BsInfoCircle></li>
+                                <li className="li-icon-info"> 
+                                {/* TODO ADD PARAMTERS? */}
+                                   <span>Autor: {summary.autorName}<br></br>
+                                    Created date: {FormatedTime(summary.createdTime)} <br></br>
+                                   Last Edit : {FormatedTime(summary.editTime)} <br></br>
+                                   </span>
+
+                                    <BsInfoCircle className='info-icon'></BsInfoCircle>
+                                </li>
                             </ul>
                         </>
                     ))

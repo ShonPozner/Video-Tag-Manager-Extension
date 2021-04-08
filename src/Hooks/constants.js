@@ -30,9 +30,6 @@ String.prototype.hashCode = function() {
 export const HashPageUrl = PageUrl.hashCode();
 
 
-
-
-
 export const CreateNewSummaryForm = () => {
   let newSummary = {
     //TODO fix it...
@@ -53,3 +50,11 @@ export const GetRandomId = () => {
 }
 
 
+
+export const FormatedTime = (date) => {
+var tempDate = new Date(date);
+date = [('0' + tempDate.getDate()).slice(-2)
+,('0' + (tempDate.getMonth() + 1)).slice(-2),
+tempDate.getFullYear()].join('-');
+return date;
+}
