@@ -8,19 +8,16 @@ import SummarysContext from "../Contexts/SummarysContext";
 import FooterAddButton from './FooterAddButton';
 import Resizable from '../Hooks/Resizable';
 
-import { Direction , Url, CreateNewSummaryForm, PageUrl, GetRandomId} from '../Hooks/constants';
-
-
+import { Direction , Url, CreateNewSummaryForm, GetRandomId, HashPageUrl} from '../Hooks/constants';
 
 const Modal = () => {
 
+//**************** Consts and useStates ****************//
 
-// const : useState and useRef
+// Const : useState and useRef
 const modalRef = useRef(null);
 const [summaryState, setSummaryState] = useState([]);
 const [notes, setNotes] = useState([]);
-
-
 
 /**
  * Try to find the summary according to url,  
@@ -57,9 +54,9 @@ useEffect(() => {
 
 // Fetch - get all requset (async) 
 const fetchSummary = async () => {
-  const response = await  fetch(Url + "summarys?url=" + PageUrl);
+  const response = await  fetch(Url + "summarys?hashUrl=" + HashPageUrl);
   const data = await response.json();
-  console.log("fatch data from "+ Url + "summarys?url=" + PageUrl + "  ->>>>>  ",data);
+  console.log("fatch data from "+ Url + "summarys?hashUrl=" + HashPageUrl + "  ->>>>>  ",data);
   return data;
 }
 
@@ -80,7 +77,10 @@ const postNewSummary = async (summary) => {
       headers: {'Content-type': 'application/json',
     },
     body: JSON.stringify(summary)
-    }) 
+    })
+  
+    const notesFromServer = await fetchSummary();
+    setSummaryState(notesFromServer)
 }
 
 
@@ -126,7 +126,7 @@ const removeNoteFromSummary = async (noteId) => {
  * @param {} note 
  */
 const addNoteToSummary = async (note) => {
-  console.log("add note to summary , summaryState", summaryState);
+  // console.log("add note to summary , summaryState", summaryState);
   var isNoteIdUnique = function(id) {
     return notes.some(item => item.id === id);
   }  

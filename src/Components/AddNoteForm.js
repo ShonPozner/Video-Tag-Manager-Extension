@@ -2,12 +2,15 @@ import React, {useState} from "react"
 import "./addNoteForm.css";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import {PageUrl} from '../Hooks/constants';
+
 
 const AddNoteForm = (props) => {
     const [title, setTitle] = useState('');
     const [tag, setTag] = useState('');
-    // const [formatedTime, setFormatedTime] = useState(props.timeFormted);
-    const [formatedTime, setFormatedTime] = useState("00:00:00");
+    //TODO FIX TO PROPS ONLY
+    const [formatedTime, setFormatedTime] = useState(PageUrl.includes("http://localhost") ? "00:00:00": props.timeFormted);
+    // const [formatedTime, setFormatedTime] = useState("00:00:00");
     const [content, setContent] = useState('');
 
 

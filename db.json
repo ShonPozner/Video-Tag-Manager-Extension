@@ -21,127 +21,18 @@
   ],
   "summarys": [
     {
-      "id": 1,
-      "url": "www.zoom",
-      "title": "not real zoom",
-      "autorName": "Shon4me",
-      "createdTime": "27.3.2021",
-      "editTime": "28.3.2021",
-      "tags": [
-        "zoom",
-        "zoom1",
-        "zoom3"
-      ]
-    },
-    {
-      "id": 2,
-      "url": "https://us02web.zoom.us/rec/play/E38eBi_rfsgGCYhh6YiiutEw4pcsdCsHF2jy0sOMCfEAEzoFrb4z0IBnQLf5jgsMRxqULz7h-5fpc5S3.tLHdrPTcTXQ2n0Tz?continueMode=true&_x_zm_rtaid=8E8g3kSeQMGVoTvDaygrrQ.1603012922993.2fcaba7a7c5cc81110b378f2474fb863&_x_zm_rhtaid=614",
-      "title": "not real youtube",
-      "autorName": "mor1",
-      "createdTime": "27.3.2021",
-      "editTime": "28.3.2021",
-      "tags": [
-        "you",
-        "tube"
-      ]
-    },
-    {
-      "id": 3,
-      "url": "www.zoom1",
-      "title": "real zoom",
-      "autorName": "mor2",
-      "createdTime": "27.3.2021",
-      "editTime": "28.3.2021",
-      "tags": [
-        "real",
-        "url"
-      ]
-    },
-    {
-      "id": 1000,
       "url": "http://localhost:3000/",
+      "hashUrl": 1821633465,
       "title": "Title...",
       "autorName": "Shon4me",
-      "createdTime": "2021-04-08T11:19:01.630Z",
-      "editTime": "2021-04-08T11:19:01.630Z",
+      "createdTime": "2021-04-08T12:45:48.412Z",
+      "editTime": "2021-04-08T12:45:48.412Z",
       "tags": [
         "tag1",
         "tag2"
-      ]
+      ],
+      "id": 1
     }
   ],
-  "notes": [
-    {
-      "id": 21,
-      "title": "try2",
-      "summaryId": 2,
-      "content": "<p>try2</p>",
-      "time": "00:27:14",
-      "tag": "",
-      "timeSec": 1634
-    },
-    {
-      "id": 3004878,
-      "summaryId": 1,
-      "title": "fasd",
-      "content": "<p>fdsa</p>",
-      "time": "00:00:00",
-      "tag": "",
-      "timeSec": 0
-    },
-    {
-      "id": 882474,
-      "summaryId": 1,
-      "title": "28",
-      "content": "<p>28</p><p>&nbsp;</p>",
-      "time": "00:28:36",
-      "tag": "Repeat",
-      "timeSec": 1716
-    },
-    {
-      "id": 1786474,
-      "summaryId": 100,
-      "title": "gd",
-      "content": "<p>gfds</p>",
-      "time": "00:00:00",
-      "tag": "",
-      "timeSec": 0
-    },
-    {
-      "id": 2688742,
-      "summaryId": 100,
-      "title": "da",
-      "content": "<p>dsa</p>",
-      "time": "00:00:00",
-      "tag": "",
-      "timeSec": 0
-    },
-    {
-      "id": 5683934,
-      "summaryId": 100,
-      "title": "fdsf f dsa f dsa f sda f sda f sa fsa d fsa d fds d fsa",
-      "content": "<p>fsd</p>",
-      "time": "00:00:00",
-      "tag": "",
-      "timeSec": 0
-    },
-    {
-      "id": 4292367,
-      "summaryId": 100,
-      "title": "gs",
-      "content": "<p>gsdf</p>",
-      "time": "00:00:00",
-      "tag": "",
-      "timeSec": 0
-    },
-    {
-      "id": 3431148,
-      "summaryId": 1000,
-      "title": "bcx",
-      "content": "<p>bcxv</p>",
-      "time": "00:00:00",
-      "tag": "",
-      "timeSec": 0
-    }
-  ]
+  "notes": []
 }
