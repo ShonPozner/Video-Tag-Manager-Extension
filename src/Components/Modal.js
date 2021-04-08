@@ -8,114 +8,103 @@ import SummarysContext from "../Contexts/SummarysContext";
 import FooterAddButton from './FooterAddButton';
 import Resizable from '../Hooks/Resizable';
 
-import { Direction } from '../Hooks/constants';
+import { Direction , Url, CreateNewSummaryForm, PageUrl, GetRandomId} from '../Hooks/constants';
 
 
 
 const Modal = () => {
-// TODO change to real backend server
-var url = 'http://localhost:5000/';
 
+
+// const : useState and useRef
 const modalRef = useRef(null);
-
-  
-// Default empty
-const [summaryState, setSummaryState] = useState(
-  [
-    // {
-    //     id: 1,
-    //     title: "What is your return policy?",
-    //     content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." ,
-    //     time:"0:45:03",
-    //     tag: "definition",
-    //     timeSec: 2261.864352
-    // }, 
-    // {
-    //     id:2,
-    //     title: "Which languages does you support?,",
-    //     content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    //     time:"0:45:03",
-    //     tag: "summary",
-    //     timeSec: 2262.864352
-    // },
-    // {
-    //     id:3,
-    //     title: "Can I use a custom domain?",
-    //     content: "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p></br><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>",
-    //     time:"0:45:03",
-    //     tag: "important",
-    //     timeSec: 2263.864352
-    // },
-    // {
-    //     id:4,
-    //     title: "Which languages does you support?",
-    //     content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    //     time:"0:45:03",
-    //     tag: "summary",
-    //     timeSec: 2264.864352
-    // },
-    // {
-    //     id:5,
-    //     title: "",
-    //     content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    //     time:"0:45:03",
-    //     tag: "summary",
-    //     timeSec: 2265.864352
-    // },
-    // {
-    //     id:6,
-    //     title: "da",
-    //     content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    //     time:"0:45:03",
-    //     tag: "important",
-    //     timeSec: 2266.864352
-    // }
-]
-);
-const [summaryId, setSummaryId] = useState(1);
+const [summaryState, setSummaryState] = useState([]);
 const [notes, setNotes] = useState([]);
 
 
-// in setup fetch to get all notes
+
+/**
+ * Try to find the summary according to url,  
+ * if any I will initialize it,
+ * otherwise build a new summary and upload it to the server
+ */
 useEffect(() => { 
   const getSummary = async () => {
     const summaryFromServer = await fetchSummary();
-    console.log(summaryFromServer);
-    // setNotes(notesFromServer.sort((a, b) => 
-    //   a.timeSec > b.timeSec ? 1 : -1));
-    setSummaryState(summaryFromServer);
-    setSummaryId(summaryFromServer.id);
-    const notesFromServer = await fetchNotes();
-    console.log(notesFromServer);
-    setNotes(notesFromServer.sort((a, b) => 
-      a.timeSec > b.timeSec ? 1 : -1));  }
+    console.log("summary that app finded ->", summaryFromServer);
+
+    summaryFromServer.length > 0 ? setSummaryState(summaryFromServer) : createNewSummary()
+  }
   getSummary();
 }, [])
 
+/**
+ * Updates the state of notes to match the selected summary
+ */
+useEffect(() => {
+  const getNotes = async () => {
+    const notesFromServer = await fetchNotes();
+    console.log("notes ->", notesFromServer);
+    setNotes(notesFromServer.sort((a, b) => 
+      a.timeSec > b.timeSec ? 1 : -1));
+  }
+  console.log("test-> ", summaryState);
+  summaryState.length > 0 ? getNotes() : setNotes([]) 
+
+},[summaryState])
+
+
+//**************** Summary ****************//
 
 // Fetch - get all requset (async) 
 const fetchSummary = async () => {
-  const response = await  fetch(url + "summarys?url=www.zoom");
+  const response = await  fetch(Url + "summarys?url=" + PageUrl);
   const data = await response.json();
-  console.log("fatch data from "+ url + "->>>>>  ",data);
+  console.log("fatch data from "+ Url + "summarys?url=" + PageUrl + "  ->>>>>  ",data);
   return data;
 }
 
-// Fetch - get all requset (async) 
+// Create New summary, build new summary , add to state and post to setrver
+const createNewSummary = () => {
+  let newSummary =  CreateNewSummaryForm();
+  console.log("add new Summary...  ", newSummary);
+  setSummaryState([newSummary]);
+  postNewSummary(newSummary);
+}
+
+// Post the new summary to server (async)
+const postNewSummary = async (summary) => {
+  // send post to server
+  const response = await fetch(Url + "summarys",
+    {
+      method: "POST",
+      headers: {'Content-type': 'application/json',
+    },
+    body: JSON.stringify(summary)
+    }) 
+}
+
+
+//**************** Notes ****************//
+
+
+// Fetch - get all notes of this summary (async) 
 const fetchNotes = async () => {
-  const response = await  fetch(url + `summarys/${summaryId}/notes`);
+  console.log(`summaryState`, summaryState)
+  const id = summaryState[0].id;
+  console.log("fetchNotes, my summary is: ", summaryState[0].id)
+  const response = await  fetch(Url + `summarys/${id}/notes`);
   const data = await response.json();
-  console.log("fatch data from "+ url + "->>>>>  ",data);
+  console.log("fatch data from "+ Url + `summarys/${id}/notes` + "  ->>>>>  ",data);
   return data;
 }
 
 
 // Fetch - get some specific note requset (async) 
 const fetchNote = async (noteId) => {
-  const response = await  fetch(url+`summarys/${summaryId}/notes`);
+  const response = await  fetch(Url+`notes/${noteId}`);
   const data = await response.json();
-  console.log("fatch data from "+ url + "->>>>>  ",data);
-  return data.find(({id}) => id === noteId);
+  // return data.find(({id}) => id === noteId);
+  return data;
 }
 
 /**
@@ -126,8 +115,7 @@ const fetchNote = async (noteId) => {
 const removeNoteFromSummary = async (noteId) => {
   console.log("Delete... ", noteId);
   setNotes(notes.filter((note) => note.id !== noteId))
-
-  await fetch(url+`notes/${noteId}`, {
+  await fetch(Url+`notes/${noteId}`, {
     method: 'DELETE'
   })
 };
@@ -138,26 +126,28 @@ const removeNoteFromSummary = async (noteId) => {
  * @param {} note 
  */
 const addNoteToSummary = async (note) => {
-  // 
-  var isUniqueId = function() {
+  console.log("add note to summary , summaryState", summaryState);
+  var isNoteIdUnique = function(id) {
     return notes.some(item => item.id === id);
   }  
   do {
     // Get random id
-    var id = Math.floor(Math.random() * 10000000) + 1;
-    var found = isUniqueId();
+    var id = GetRandomId();
+    var found = isNoteIdUnique(id);
     console.log("id -> ", id, "found -> ", found); 
   } while(found)
-  const newNote = {id, ...note};
+
+  const summaryId = summaryState[0].id;
+  const newNote = {id, summaryId, ...note};
   console.log("add... ", newNote);
   const newStateNotes = [...notes, newNote].sort((a, b) => {
     return a.timeSec > b.timeSec ? 1 : -1;
   });
-
+  
   setNotes(newStateNotes);
 
   // send post to server
-  const response = await fetch(url+ "notes",
+  const response = await fetch(Url+ "notes",
     {
       method: "POST",
       headers: {'Content-type': 'application/json',
@@ -174,7 +164,7 @@ const updateNote = async (noteId) => {
   // add updade function local and create change to newNote
   const newNote = {...noteThatUpdating, } //todo
   
-  const response = await fetch(url +`notes/${noteId}`, {
+  const response = await fetch(Url +`notes/${noteId}`, {
     method: 'PUT',
     headers: {
       'Content-type': 'application/json'
@@ -277,6 +267,7 @@ const handleResize = (direction, movementX, movementY) => {
 
               {/* save the all static (global) in this file */}
               <SummarysContext.Provider value={{
+                summary: summaryState,
                 notes: notes,
                 removeNoteFromSummary: removeNoteFromSummary
               }} >
