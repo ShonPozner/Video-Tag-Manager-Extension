@@ -83,6 +83,28 @@ const postNewSummary = async (summary) => {
     setSummaryState(notesFromServer)
 }
 
+// Update Summary put (async)
+const UpdateSummary = async (newParamtersSummarys) => {
+  console.log("befor update summary - ", summaryState);
+  
+  let newSummary = summaryState[0];
+  newSummary.title = newParamtersSummarys.title;
+  newSummary.editTime = newParamtersSummarys.editTime;
+
+  console.log("befor update summary - ", newSummary);
+
+  // setState (loacl)
+  setSummaryState([newSummary]);
+
+  const response = await fetch(Url +`summarys/${summaryState[0].id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-type': 'application/json'
+    },
+    body: JSON.stringify(newSummary)
+  })
+}
+
 
 //**************** Notes ****************//
 
@@ -280,7 +302,9 @@ const handleResize = (direction, movementX, movementY) => {
                       </div>
                     </div>
 
-                    <TitleAndDetails></TitleAndDetails>
+                    <TitleAndDetails
+                    updateSummary= {UpdateSummary} 
+                    ></TitleAndDetails>
 
                     <AccordionNotes></AccordionNotes>
 

@@ -1,13 +1,27 @@
-import React from 'react'
+import React, {useState, useEffect} from "react"
 import{BsInfoCircle} from 'react-icons/bs'
 import SummarysContext from "../Contexts/SummarysContext";
 import {FormatedTime} from "../Hooks/constants";
 
 
-// TODO add props or state of tag and title name
-// TODO add icon of info.. that show date, author and so on?
-// TODO  EDIT button show all detalis??  
-function TitleAndDetails() {
+function TitleAndDetails(props) {
+    const [title, setTitle] = useState('');
+    
+
+    const handleOnChange = (event) => {
+        setTitle(event.target.value);
+    };
+
+    useEffect(() => {
+        if (title === '') return
+        const timeoutId = setTimeout(() => props.updateSummary({
+            title: title,
+            editTime:Date()
+        }), 2000);
+        return () => clearTimeout(timeoutId);
+    }, [title]);
+
+
     return (
         <SummarysContext.Consumer>
             {context=> (
@@ -15,7 +29,9 @@ function TitleAndDetails() {
                 {context.summary.length > 0 ? 
                     context.summary.map((summary)=> (
                         <>
-                            <h2>{summary.title}</h2>
+                            <input id="summary-title" type='text' name="title" defaultValue={summary.title}
+                             placeholder="Add Title" autocomplete="off" onChange= {handleOnChange}></input> 
+                            {/* <h2>{summary.title }</h2> */}
                             <ul className="list-tags">
                                 {summary.tags.map(tag=> (
                                     <li className="item-tag">{tag}</li>

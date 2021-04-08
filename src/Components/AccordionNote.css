@@ -131,7 +131,6 @@ margin-top: 2px;
 cursor: help;
 margin-right: 4px;
 position: relative;
-display: inline-block;
 }
 .item-tag{
   border: 1px solid rgb(197, 167, 167)!important;
@@ -159,6 +158,22 @@ display: inline-block;
 .li-icon-info:hover span{
   visibility: visible;
 }
+
+
+#summary-title{
+  color: #ffffff;
+  text-align: center;
+  display: block;
+  font-size: 1.5em;
+  background-color:hsla(120, 60%, 70%, 0) ;
+  display: flex;
+  border: 0px;
+  font-weight: bold;
+  
+  width: -webkit-fill-available;
+
+}
+
 
 
 
