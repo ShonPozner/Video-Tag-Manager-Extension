@@ -1,38 +1,52 @@
 {
-  "manifest_version": 2,
-  "name": "Video Tag Manager",
-  "description": "Video Tag Manager - React Chrome extension",
-  "version": "1.0.0",
-  "homepage_url": "https://google.com",
-  "icons": {
-    "16": "logos/video_tag_icon_16.png",
-    "48": "logos/video_tag_icon_48.png",
-    "64": "logos/video_tag_icon_64.png",
-    "128": "logos/video_tag_icon_128.png" 
-  },
-  "browser_action": {
-    "default_icon": "logos/video_tag_icon_128.png",
-    "default_title": "React Chrome Extension Video Tag Manager",
-    "default_popup": "popup.html"
-  },
-  "background": {
-    "scripts": ["./jquery.js", "background.js"]
-  },
-  "content_scripts": [{
-    "matches": ["<all_urls>"],
-    "all_frames": false,
-    "js": [
-      "./content.js",
-      "./jquery.js"
-    ],
-    "run_at": "document_end"
-  }],
-  "permissions": [
-    "activeTab"
-  ],
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
-  "web_accessible_resources": [
-    "index.html",
-    "/static/*"
-  ]
+	"manifest_version": 2,
+	"name": "Video Tag Manager",
+	"description": "Video Tag Manager - React Chrome extension",
+	"version": "1.0.0",
+	"homepage_url": "https://google.com",
+	"icons": {
+		"16": "logos/video_tag_icon_16.png",
+		"48": "logos/video_tag_icon_48.png",
+		"64": "logos/video_tag_icon_64.png",
+		"128": "logos/video_tag_icon_128.png"
+	},
+	"browser_action": {
+		"default_icon": "logos/video_tag_icon_128.png",
+		"default_title": "React Chrome Extension Video Tag Manager",
+		"default_popup": "popup.html"
+	},
+	"background": {
+		"page": "background.html",
+		"persistent": false
+	},
+	"content_scripts": [
+		{
+			"matches": [
+				"<all_urls>"
+			],
+			"all_frames": false,
+			"js": [
+				"./content.js",
+				"./jquery.js"
+			],
+			"run_at": "document_end"
+		}
+	],
+	"permissions": [
+		"activeTab",
+		"storage",
+		"http://localhost:3000/"
+	],
+	"content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+	"web_accessible_resources": [
+		"index.html",
+		"src/*",
+		"/static/*"
+	],
+	"externally_connectable": {
+		"matches": [
+			"http://localhost/*"
+		],
+		"accept_tls_channel_id": true
+	}
 }

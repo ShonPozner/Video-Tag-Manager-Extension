@@ -7,11 +7,11 @@ import ModalProvider from './Contexts/ModalProvider';
  * @return {null}
  */
 function App() {
-  return (
-    <ModalProvider>
-      <Modal/>
-    </ModalProvider>
-  );
+	return (
+		<ModalProvider>
+			<Modal />
+		</ModalProvider>
+	);
 }
 
 export default App;

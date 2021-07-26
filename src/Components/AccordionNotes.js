@@ -6,23 +6,23 @@ import SummarysContext from "../Contexts/SummarysContext";
 
 
 const AccordionNotes = () => {
-    return (
-        <SummarysContext.Consumer>
-            {context=> (
-                <div className="accordion-notes">
-                {context.notes.length > 0 ? context.notes.map((note) => (
-                    <AccordionNote key={note.id} removeFunction={context.removeNoteFromSummary}
-                     id={note.id}  tag={note.tag} title={note.title} time={note.time} timeSec={note.timeSec}
-                    content={note.content}/>
-                )): <AccordionNote removeFunction={context.removeNoteFromSummary}
-                    id={0} title="Start Your Summary (edit me)"  timeSec="0" time="00:00:00" content={'<p>Enter you text here</p>'}/>
-            }
-            </div>
-            )}
+	return (
+		<SummarysContext.Consumer>
+			{context => (
+				<div className="accordion-notes">
+					{context.notes.length > 0 ? context.notes.map((note) => (
+						<AccordionNote key={note.id} removeFunction={context.removeNoteFromSummary}
+							id={note.id} tag={note.tag} title={note.title} time={note.time} timeSec={note.timeSec}
+							content={note.content} />
+					)) : <AccordionNote removeFunction={context.removeNoteFromSummary}
+						id={0} title="Start Your Summary (edit me)" timeSec="0" time="00:00:00" content={'<p>Enter you text here</p>'} />
+					}
+				</div>
+			)}
 
-        </SummarysContext.Consumer>
-        
-    )
+		</SummarysContext.Consumer>
+
+	)
 }
 
 export default AccordionNotes
