@@ -1,7 +1,7 @@
 import React, {useState} from "react"
 import "./addNoteForm.css";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {PageUrl} from '../Hooks/constants';
 
 
@@ -66,7 +66,7 @@ const AddNoteForm = (props) => {
             <li>
                 <div className="Editor">
                     <CKEditor
-                        editor={ ClassicEditor}
+                        editor={ ClassicEditor }
                         data={content}
 
                         onChange={ ( event, editor ) => {
@@ -75,10 +75,10 @@ const AddNoteForm = (props) => {
                             setContent(data)
                         } }
 
-						onError={(error) => {
-							console.log(error);
-							//DO NOTHING
-						}}
+						// onError={(error) => {
+						// 	console.log(error);
+						// 	//DO NOTHING
+						// }}
                     />
                 </div>
             </li>
