@@ -8,7 +8,7 @@ import parse from 'html-react-parser';
 import "./AccordionNote.css";
 
 // Hooks...
-const AccordionNote = (props) => {
+const AccordionNote = ({key, removeFunction, note}) => {
 	const [setActive, setActiveState] = useState("");
 	const [setHeight, setHeightState] = useState("0px");
 	const [setRotate, setRotateState] = useState("accordion_icon");
@@ -31,14 +31,14 @@ const AccordionNote = (props) => {
 	return (
 		<div className="accordion_section">
 			<button className={`accordion ${setActive}`} onClick={toggleAccordion}>
-				<p className="accordion_tag">{props.tag}</p>
-				<p className="accordion_title">{props.title}</p>
+				<p className="accordion_tag">{note.tag}</p>
+				<p className="accordion_title">{note.title}</p>
 				<div className="user-actions-icon">
 					<FaRegEdit className="actions-icon"></FaRegEdit>
 					<FaTrash style={{ cursor: 'pointer' }} className="actions-icon" onClick={() =>
 						// TODO change to-> https://dev.to/isarisariver/how-to-create-a-custom-confirm-box-with-react-754
 						window.confirm("Are you sure you wish to delete this item?") &&
-						props.removeFunction(props.id)} ></FaTrash>
+						removeFunction(note)} ></FaTrash>
 
 					<Chevron className={`${setRotate}`} width={10} fill={"#777"} />
 				</div>
@@ -53,12 +53,12 @@ const AccordionNote = (props) => {
 					<h3 className="accordion_time" onClick={() => {
 						var vid = document.querySelectorAll('video')[0];
 						if (typeof vid !== 'undefined') {
-							vid.currentTime = props.timeSec;
+							vid.currentTime = note.timeSec;
 						}
 					}}
-					>{props.time}</h3>
+					>{note.time}</h3>
 					<div className="accordion_text">
-						<p>{parse(props.content)}</p>
+						<p>{parse(note.content)}</p>
 					</div>
 				</div>
 			</div>

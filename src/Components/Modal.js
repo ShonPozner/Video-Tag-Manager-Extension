@@ -11,6 +11,7 @@ import Resizable from '../Hooks/Resizable';
 import { Direction, Url, CreateNewSummaryForm, GetRandomId, HashPageUrl, PageUrl } from '../Hooks/constants';
 
 import SummaryApi from "../api/Summary";
+import NoteApi from "../api/Note";
 import {
 	CognitoIdToken,
 	CognitoAccessToken,
@@ -20,7 +21,6 @@ import {
 	CognitoUserPool
 } from "amazon-cognito-identity-js";
 import { Auth } from "aws-amplify";
-import { map } from "jquery";
 
 const Modal = () => {
 
@@ -31,7 +31,9 @@ const Modal = () => {
 	const [summaryState, setSummaryState] = useState([]);
 	const [notes, setNotes] = useState([]);
 
-	const { getMyLibrariesRemote, addSummaryRemote } = SummaryApi();
+	const { getMyLibrariesRemote, addSummaryRemote, updateSummaryRemote } = SummaryApi();
+	const { getNotes, updateNote, deleteNote } = NoteApi();
+	
 	/**
 	 * Try to find the summary according to url,  
 	 * if any I will initialize it,
@@ -58,11 +60,11 @@ const Modal = () => {
 	useEffect(() => {
 		const getNotes = async () => {
 			const notesFromServer = await fetchNotes();
-			console.log("notes ->", notesFromServer);
+			console.log("notes:", notesFromServer);
 			setNotes(notesFromServer.sort((a, b) =>
 				a.timeSec > b.timeSec ? 1 : -1));
 		}
-		console.log("test-> ", summaryState);
+		console.log("test: ", summaryState);
 		summaryState.length > 0 ? getNotes() : setNotes([])
 
 	}, [summaryState])
@@ -70,6 +72,7 @@ const Modal = () => {
 
 	// Re-build the session and authenticate the user
 	const authenticateUser = () => {
+		console.log("authenticateUser, before JSON.parse"); //DELETEME
 		const session = JSON.parse(window.localStorage["vtm-session"]);
 		console.log(`authenticateUser, session:`, session);
 
@@ -183,7 +186,7 @@ const Modal = () => {
 
 	// Update Summary put (async)
 	const UpdateSummary = async (newParamtersSummarys) => {
-		console.log("befor update summary - ", summaryState);
+		console.log("UpdateSummary, summaryState:", summaryState);
 
 		let newSummary = summaryState[0];
 		newSummary.title = newParamtersSummarys.title;
@@ -192,15 +195,14 @@ const Modal = () => {
 		console.log("befor update summary - ", newSummary);
 
 		// setState (loacl)
-		setSummaryState([newSummary]);
-
-		const response = await fetch(Url + `summarys/${summaryState[0].id}`, {
-			method: 'PUT',
-			headers: {
-				'Content-type': 'application/json'
-			},
-			body: JSON.stringify(newSummary)
+		updateSummaryRemote(newSummary)
+		.then(response => {
+			console.log(response); //DELETEME
+			setSummaryState([newSummary]);
 		})
+		.catch(error => {
+			console.log(error); //DELETEME
+		});
 	}
 
 
@@ -209,17 +211,23 @@ const Modal = () => {
 
 	// Fetch - get all notes of this summary (async) 
 	const fetchNotes = async () => {
-		console.log(`summaryState`, summaryState)
-		const id = summaryState[0].id;
-		console.log("fetchNotes, my summary is: ", summaryState[0].id)
-		const response = await fetch(Url + `summarys/${id}/notes`);
-		const data = await response.json();
-		console.log("fatch data from " + Url + `summarys/${id}/notes` + "  ->>>>>  ", data);
-		return data;
+		console.log(`fetchNotes, summaryState`, summaryState);
+
+		try {
+			let notes = await getNotes(summaryState[0].sid);
+			return notes;
+		} catch (error) {
+			console.log(error); //DELETEME
+			return undefined;
+		}
+		
+		// const response = await fetch(Url + `summarys/${id}/notes`);
+		// const data = await response.json();
+		// console.log("fatch data from " + Url + `summarys/${id}/notes` + "  ->>>>>  ", data);
+		// return data;
 	}
 
-
-	// Fetch - get some specific note requset (async) 
+	// Fetch - get some specific note requset (async)
 	const fetchNote = async (noteId) => {
 		const response = await fetch(Url + `notes/${noteId}`);
 		const data = await response.json();
@@ -227,17 +235,18 @@ const Modal = () => {
 		return data;
 	}
 
+	//TODO param is entire note (instead of ID)
 	/**
 	 * Remove note - first delete loacl (state),  
 	 * and than send delete http command
 	 * @param {int} noteId 
 	 */
-	const removeNoteFromSummary = async (noteId) => {
-		console.log("Delete... ", noteId);
-		setNotes(notes.filter((note) => note.id !== noteId))
-		await fetch(Url + `notes/${noteId}`, {
-			method: 'DELETE'
-		})
+	const removeNoteFromSummary = async (note) => {
+		console.log("removeNoteFromSummary, note: ", note); //DELETEME
+		let response = await deleteNote(note);
+		
+		console.log(`response:`, response);
+		setNotes(notes.filter((curNote) => curNote.nid !== note.nid))
 	};
 
 	/**
@@ -277,23 +286,41 @@ const Modal = () => {
 			})
 	}
 
-	// TODO need to coding update method...
-	const updateNote = async (noteId) => {
-		const noteThatUpdating = await fetchNote(noteId);
-		console.log("befor update - ", noteThatUpdating);
+	const updateNoteIn = (note) => {
+		if (!note.sid || typeof(note.createTime) !== typeof (1)) {
+			console.log('invalid note object', note); //DELETEME
+			return;
+		}
 
-		// add updade function local and create change to newNote
-		const newNote = { ...noteThatUpdating, } //todo
+        updateNote(note)
+			.then(response => {
+				console.log(`update note response:`, response); //DELETEME
+				setNotes(prev => prev.map(item => (item.nid === note.nid ? note : item)));
+			})
+			.catch(error => {
+				console.log(error);
+			})
+    }
 
-		const response = await fetch(Url + `notes/${noteId}`, {
-			method: 'PUT',
-			headers: {
-				'Content-type': 'application/json'
-			},
-			body: JSON.stringify(newNote)
-		})
-		const data = await response.json()
-	}
+	// // // TODO need to coding update method...
+	// const updateNoteOld = async (note) => {
+	// 	const response = await updateNote(note);
+
+	// 	const noteThatUpdating = await fetchNote(noteId);
+	// 	console.log("befor update - ", noteThatUpdating);
+
+	// 	// add updade function local and create change to newNote
+	// 	const newNote = { ...noteThatUpdating, } //todo
+
+	// 	const response = await fetch(Url + `notes/${noteId}`, {
+	// 		method: 'PUT',
+	// 		headers: {
+	// 			'Content-type': 'application/json'
+	// 		},
+	// 		body: JSON.stringify(newNote)
+	// 	})
+	// 	const data = await response.json()
+	// }
 
 	//close the Editor section (extension)
 	const closeVideoTagSection = () => {
@@ -369,8 +396,6 @@ const Modal = () => {
 				break;
 		}
 	};
-
-
 
 
 	return (

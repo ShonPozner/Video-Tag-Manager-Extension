@@ -38,9 +38,9 @@ function TitleAndDetails(props) {
 									))}
 									<li className="li-icon-info">
 										{/* TODO ADD PARAMTERS? */}
-										<span>Autor: {summary.autorName}<br></br>
-											Created date: {FormatedTime(summary.createdTime)} <br></br>
-											Last Edit : {FormatedTime(summary.editTime)} <br></br>
+										<span>Author: {summary.authorName}<br></br>
+											Created: {FormatedTime(summary.createTime)} <br></br>
+											Modified: {FormatedTime(summary.editTime)} <br></br>
 										</span>
 
 										<BsInfoCircle className='info-icon'></BsInfoCircle>

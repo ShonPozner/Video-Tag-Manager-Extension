@@ -29,7 +29,7 @@ function openVideoTagWeb() {
  * // TODO Create it
  */
 function displayEditButton() {
-	console.log("displayEditButton")
+	console.log("displayEditButton");
 }
 
 /**
