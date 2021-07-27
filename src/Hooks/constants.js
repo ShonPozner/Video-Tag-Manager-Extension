@@ -36,7 +36,6 @@ export const CreateNewSummaryForm = () => {
 		tags: ["tag"],
 		title: "Title"
 	}
-	
 	return newSummary;
 }
 

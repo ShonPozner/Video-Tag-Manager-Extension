@@ -1,13 +1,14 @@
 /* global chrome */
 
+const homepage = "http://localhost:3000/access/login";
+
 chrome.runtime.onMessage.addListener(function (request, sender) {
 	console.log('contents, request:', request);
 
 	if (request.message == "Open Summary") {
 		main();
-	} else {
-		window.localStorage.setItem("vtm-session", JSON.stringify(request));
-		sendResponse("OK");
+	} else if (request.message === "vtm-session") {
+		window.localStorage.setItem("vtm-session", request.session);
 	}
 });
 
@@ -15,28 +16,36 @@ function main() {
 	// Get the extensnsion origen url
 	const extensionOrigin = 'chrome-extension://' + chrome.runtime.id;
 
-	if (!location.ancestorOrigins.contains(extensionOrigin)) {
+	chrome.runtime.sendMessage({message: "vtm-session-request"}, function(response) {
+		console.log("sendMessage response:", response);
+		if (response) {
+			window.localStorage.setItem("vtm-session", response);
 
-		// Fetch the local React index.html page
-		fetch(chrome.runtime.getURL('index.html') /*, options */)
-			.then((response) => response.text())
-			.then((html) => {
+			if (!location.ancestorOrigins.contains(extensionOrigin)) {
+				// Fetch the local React index.html page
+				fetch(chrome.runtime.getURL('index.html') /*, options */)
+					.then((response) => response.text())
+					.then((html) => {
+		
+						// Create the html that inject to the web
+						var styleStashHTML = html.replace(/\/static\//g, `${extensionOrigin}/static/`);
+						styleStashHTML = '<div id="video-tag-manger-section">' + styleStashHTML + '</div>'
+						var videoTagSection = document.getElementById("video-tag-manger-section");
+		
+						if (videoTagSection != null) {  // Check if the editor desplay allredy
+							videoTagSection.remove(); // Remove the Editor from the page
+						} else
+							// Add the Editor to the page
+							$(styleStashHTML).appendTo('body');
+					})
+					.catch((error) => {
+						console.warn(error);
+					});
+			}
+		}
+	});
 
-				// Create the html that inject to the web
-				var styleStashHTML = html.replace(/\/static\//g, `${extensionOrigin}/static/`);
-				styleStashHTML = '<div id="video-tag-manger-section">' + styleStashHTML + '</div>'
-				var videoTagSection = document.getElementById("video-tag-manger-section");
-
-				if (videoTagSection != null) {  // Check if the editor desplay allredy
-					videoTagSection.remove(); // Remove the Editor from the page
-				} else
-					// Add the Editor to the page
-					$(styleStashHTML).appendTo('body');
-			})
-			.catch((error) => {
-				console.warn(error);
-			});
-	}
+	
 }
 
 window.addEventListener("message", function (event) {

@@ -1,5 +1,7 @@
 /* global chrome */
 
+const homepage = "http://localhost:3000/access/login";
+
 chrome.browserAction.onClicked.addListener(function (tab) {
 	//Show Popup window: 1. View the summary 2. Displays the Add New Tag butto
 
@@ -10,22 +12,27 @@ chrome.browserAction.onClicked.addListener(function (tab) {
 
 // Listen for incoming external messages.
 chrome.runtime.onMessageExternal.addListener(async function (request, sender, sendResponse) {
-	console.log(request);
+	console.log("background, onMessageExternal, request:", request);
 
 	if (request) {
-		chrome.tabs.query({}, function (tabs) {
-			for (var i = 0; i < tabs.length; ++i) {
-				chrome.tabs.sendMessage(tabs[i].id, request);
-			}
-		});
-		// authenticateUser(request);
-		// Auth.currentAuthenticatedUser()
-		// .then(response => {
-		// 	console.log('auth user:', response)
-		// })
-	} else {
-
+		const session = JSON.stringify(request);
+		window.localStorage.setItem("vtm-session", session);
+		chrome.runtime.sendMessage({message: "vtm-session", session: session});
 	}
-	window.localStorage.setItem("shon", "gever");
-	sendResponse("OK");
 });
+
+chrome.runtime.onMessage.addListener(async function (request, sender, sendResponse) {
+	console.log("background, onMessage, request:", request);
+
+	if (request.message && request.message === "vtm-session-request") {
+		if (window.localStorage["vtm-session"]) {
+			console.log("received vtm-session request, replying with:", window.localStorage["vtm-session"]); //DELETEME
+			sendResponse(window.localStorage["vtm-session"]);
+		} else {
+			sendResponse(undefined);
+			chrome.tabs.create({
+				url: homepage
+			});
+		}
+	}
+})

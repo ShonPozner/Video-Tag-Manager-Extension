@@ -5,5 +5,5 @@ export default React.createContext({
 	notes: [],
 	summary: [],
 	addNoteToSummary: note => { },
-	removeNoteFromSummary: noteId => { }
+	removeNoteFromSummary: note => { }
 });
