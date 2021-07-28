@@ -1,10 +1,20 @@
 import React, {useState} from "react"
 import "./addNoteForm.css";
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+// import { CKEditor } from '@ckeditor/ckeditor5-react';
+// import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
+import StyleEditor from "./StyleEditor";
+
+
 import {PageUrl} from '../Hooks/constants';
 
-
+const YoutubeDisableHotkeys = () => {
+    console.log(`Focuse new disable_hotkeys`);
+    var hotkey_manager = document.getElementsByTagName('yt-Hotkey-Manager')[0];
+    if (hotkey_manager) {
+        hotkey_manager.parentNode.removeChild(hotkey_manager);
+    }
+}
 const AddNoteForm = (props) => {
     const [title, setTitle] = useState('');
     const [tag, setTag] = useState('');
@@ -43,6 +53,7 @@ const AddNoteForm = (props) => {
         return(timeSecFormat)
     }
 
+
     return(   
         <form className="form-style-9" onSubmit={onSubmit}>
             <ul>
@@ -64,22 +75,8 @@ const AddNoteForm = (props) => {
                     </datalist>
             </li>
             <li>
-                <div className="Editor">
-                    <CKEditor
-                        editor={ ClassicEditor }
-                        data={content}
-
-                        onChange={ ( event, editor ) => {
-                            const data = editor.getData();
-                            // console.log( { event, editor, data } );
-                            setContent(data)
-                        } }
-
-						// onError={(error) => {
-						// 	console.log(error);
-						// 	//DO NOTHING
-						// }}
-                    />
+                <div className="Editor" onClick= {() => YoutubeDisableHotkeys()}>
+                    <StyleEditor id="contenteditablediv" ></StyleEditor>
                 </div>
             </li>
             <li>
