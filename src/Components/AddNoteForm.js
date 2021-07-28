@@ -2,12 +2,7 @@ import React, {useState} from "react"
 import "./addNoteForm.css";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-<<<<<<< HEAD
-
-import { PageUrl } from '../Hooks/constants';
-=======
 import {PageUrl} from '../Hooks/constants';
->>>>>>> b120588296d61c808076adf563d8aa9cd7328c02
 
 
 const AddNoteForm = (props) => {
