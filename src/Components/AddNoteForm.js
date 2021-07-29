@@ -3,9 +3,7 @@ import "./addNoteForm.css";
 // import { CKEditor } from '@ckeditor/ckeditor5-react';
 // import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
-import StyleEditor from "./StyleEditor";
-
-
+import EditorComponent from "./StyleEditor";
 import {PageUrl} from '../Hooks/constants';
 
 const YoutubeDisableHotkeys = () => {
@@ -21,7 +19,7 @@ const AddNoteForm = (props) => {
     //TODO FIX TO PROPS ONLY
     const [formatedTime, setFormatedTime] = useState(PageUrl.includes("http://localhost") ? "00:00:00": props.timeFormted);
     // const [formatedTime, setFormatedTime] = useState("00:00:00");
-    const [content, setContent] = useState('');
+    const [content, setContent] = useState('<p>Add note content 😀</p>');
 
 
     const onSubmit = (e) => {
@@ -74,11 +72,10 @@ const AddNoteForm = (props) => {
                     <option>Repeat</option>
                     </datalist>
             </li>
-            <li>
                 <div className="Editor" onClick= {() => YoutubeDisableHotkeys()}>
-                    <StyleEditor id="contenteditablediv" ></StyleEditor>
+                    <EditorComponent content={content} setContent = {setContent} ></EditorComponent>
+
                 </div>
-            </li>
             <li>
                 <input type='submit' value='Save Note'/>
             </li>

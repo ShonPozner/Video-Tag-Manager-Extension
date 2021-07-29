@@ -1,16 +1,27 @@
 import React, { useState, useEffect } from "react"
 import { BsInfoCircle } from 'react-icons/bs'
+import { CgAdd } from 'react-icons/cg'
 import SummarysContext from "../Contexts/SummarysContext";
 import { FormatedTime } from "../Hooks/constants";
 
 
 function TitleAndDetails(props) {
 	const [title, setTitle] = useState('');
+	const [tags, setTags] = useState({});
+
 
 
 	const handleOnChange = (event) => {
 		setTitle(event.target.value);
 	};
+	const handleOnChangeTag = (event) => {
+		setTitle(event.target.value);
+	};
+
+	const handleAdd = () => {
+		const newTag = "New Tag";
+
+	}
 
 	useEffect(() => {
 		if (title === '') return
@@ -31,11 +42,17 @@ function TitleAndDetails(props) {
 							<>
 								<input id="summary-title" type='text' name="title" defaultValue={summary.title}
 									placeholder="Add Title" autocomplete="off" onChange={handleOnChange}></input>
-								{/* <h2>{summary.title }</h2> */}
+								
 								<ul className="list-tags">
 									{summary.tags.map(tag => (
-										<li className="item-tag">{tag}</li>
+										<li className="item-tag">
+											<input id="summary-tag" type='text' name="title" defaultValue={tag}
+											placeholder="Add Tag" autocomplete="off" onChange={handleOnChange}></input>
+										</li>
 									))}
+									<li className="li-icon-add">
+										<CgAdd className='add-icon' onClick={handleAdd}></CgAdd>
+									</li>
 									<li className="li-icon-info">
 										{/* TODO ADD PARAMTERS? */}
 										<span>Author: {summary.authorName}<br></br>

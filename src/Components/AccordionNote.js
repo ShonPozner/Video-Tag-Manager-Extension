@@ -55,8 +55,7 @@ const AccordionNote = ({key, removeFunction, note}) => {
 						if (typeof vid !== 'undefined') {
 							vid.currentTime = note.timeSec;
 						}
-					}}
-					>{note.time}</h3>
+					}}>{note.time}</h3>
 					<div className="accordion_text">
 						<p>{parse(note.content)}</p>
 					</div>
