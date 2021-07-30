@@ -67,11 +67,12 @@ const SummaryApi = () => {
 
 	const updateSummaryRemote = async (summary) => {
 		console.log('updateSummary') //DELETEME
+		const newSummary = {...summary}
 
-		summary[summaryIdKeyName] = JSON.stringify(summary[summaryIdKeyName]);
-		summary[editTimeKeyName] = new Date().getTime();
+		newSummary[summaryIdKeyName] = JSON.stringify(summary[summaryIdKeyName]);
+		newSummary[editTimeKeyName] = new Date().getTime();
 
-		return API.patch(apiName, summaryPath, { body: summary })
+		return API.patch(apiName, summaryPath, { body: newSummary })
 
 	}
 

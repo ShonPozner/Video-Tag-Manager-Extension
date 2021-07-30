@@ -1,6 +1,8 @@
-import React from 'react';
+import React,{useState} from 'react';
 import AccordionNote from './AccordionNote';
 import SummarysContext from "../Contexts/SummarysContext";
+import FooterAddButton from './FooterAddButton';
+
 
 
 const emptyNote = {
@@ -14,19 +16,32 @@ const emptyNote = {
 	title: "Enter title"
 }
 
-const AccordionNotes = () => {
+const AccordionNotes = (props) => {
+	const [showEditNoteNumber, setShowEditNoteNumber] = useState(null);
+
+
 	return (
-		<SummarysContext.Consumer>
-			{context => (
-				<div className="accordion-notes">
-					{context.notes.length > 0 ?
-					context.notes.map((curNote) => 
-					(<AccordionNote key={curNote.nid} removeFunction={context.removeNoteFromSummary} note={curNote} />))
-					: <AccordionNote removeFunction={context.removeNoteFromSummary} note={emptyNote}/>
-					}
-				</div>
-			)}
-		</SummarysContext.Consumer>
+		<>
+			<SummarysContext.Consumer>
+					{context => (
+						<div className="accordion-notes">
+							{context.notes.length > 0 ?
+							context.notes.map((curNote) => 
+							(<AccordionNote key={curNote.nid} removeFunction={context.removeNoteFromSummary} note={curNote} setShowEditNoteNumber = {setShowEditNoteNumber}/>))
+							: <AccordionNote removeFunction={context.removeNoteFromSummary} note={emptyNote} setShowEditNoteNumber = {setShowEditNoteNumber}/>
+							}
+						</div>
+					)}
+			</SummarysContext.Consumer>
+			<FooterAddButton
+				currentTimeFormated={props.currentTimeFormated}
+				getVideoCurrentTime={props.getVideoCurrentTime}
+				currentTimeSec={props.currentTimeSec}
+				addNoteToSummary={props.addNoteToSummary}
+				setShowEditNoteNumber={setShowEditNoteNumber}
+				showEditNoteNumber={showEditNoteNumber}
+			></FooterAddButton>
+		</>
 	)
 }
 

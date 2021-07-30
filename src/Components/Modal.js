@@ -5,7 +5,7 @@ import { ModalContext } from '../Contexts/ModalProvider';
 import AccordionNotes from './AccordionNotes';
 import TitleAndDetails from './TitleAndDetails';
 import SummarysContext from "../Contexts/SummarysContext";
-import FooterAddButton from './FooterAddButton';
+// import FooterAddButton from './FooterAddButton';
 import Resizable from '../Hooks/Resizable';
 
 import { Direction, Url, CreateNewSummaryForm, GetRandomId, HashPageUrl, PageUrl } from '../Hooks/constants';
@@ -32,7 +32,7 @@ const Modal = () => {
 	const [notes, setNotes] = useState([]);
 
 	const { getMyLibrariesRemote, addSummaryRemote, updateSummaryRemote } = SummaryApi();
-	const { getNotes, updateNote, deleteNote } = NoteApi();
+	const { getNotes, updateNote, addNote, deleteNote } = NoteApi();
 	
 	/**
 	 * Try to find the summary according to url,  
@@ -190,6 +190,7 @@ const Modal = () => {
 
 		let newSummary = summaryState[0];
 		newSummary.title = newParamtersSummarys.title;
+		newSummary.tags = newParamtersSummarys.tags;
 		newSummary.editTime = newParamtersSummarys.editTime;
 
 		console.log("befor update summary - ", newSummary);
@@ -199,6 +200,7 @@ const Modal = () => {
 		.then(response => {
 			console.log(response); //DELETEME
 			setSummaryState([newSummary]);
+			console.log(`summaryState`, summaryState);
 		})
 		.catch(error => {
 			console.log(error); //DELETEME
@@ -255,36 +257,25 @@ const Modal = () => {
 	 * @param {} note 
 	 */
 	const addNoteToSummary = async (note) => {
-		// console.log("add note to summary , summaryState", summaryState);
-		var isNoteIdUnique = function (id) {
-			return notes.some(item => item.id === id);
-		}
-		do {
-			// Get random id
-			var id = GetRandomId();
-			var found = isNoteIdUnique(id);
-			console.log("id -> ", id, "found -> ", found);
-		} while (found)
+		console.log(`note1`, note);
+		note.sid= summaryState[0].sid;
 
-		const summaryId = summaryState[0].id;
-		const newNote = { id, summaryId, ...note };
-		console.log("add... ", newNote);
-		const newStateNotes = [...notes, newNote].sort((a, b) => {
-			return a.timeSec > b.timeSec ? 1 : -1;
-		});
-
-		setNotes(newStateNotes);
-
-		// send post to server
-		const response = await fetch(Url + "notes",
-			{
-				method: "POST",
-				headers: {
-					'Content-type': 'application/json',
-				},
-				body: JSON.stringify(newNote)
+        addNote(note)
+			.then(response => {
+				console.log("response: ", response);
+				note["nid"] = response.data["nid"];
+				note["createTime"] = response.data["createTime"];
+				note["editTime"] = response.data["editTime"];
+				const newStateNotes = [...notes, note].sort((a, b) => {
+					return a.timeSec > b.timeSec ? 1 : -1;
+				});
+				setNotes(newStateNotes);
 			})
-	}
+			.catch(error => {
+				console.log(error) // DELETEME
+			});            
+    }
+	
 
 	const updateNoteIn = (note) => {
 		if (!note.sid || typeof(note.createTime) !== typeof (1)) {
@@ -415,7 +406,8 @@ const Modal = () => {
 							<SummarysContext.Provider value={{
 								summary: summaryState,
 								notes: notes,
-								removeNoteFromSummary: removeNoteFromSummary
+								removeNoteFromSummary: removeNoteFromSummary,
+								editNoteFun: updateNoteIn
 							}} >
 								<Resizable onResize={handleResize} ></Resizable>
 								<div className="modal-body">
@@ -428,16 +420,19 @@ const Modal = () => {
 
 									<TitleAndDetails
 										updateSummary={UpdateSummary}
+										summary={summaryState}
+
 									></TitleAndDetails>
 
-									<AccordionNotes></AccordionNotes>
-
-									<FooterAddButton
+									<AccordionNotes
 										currentTimeFormated={currentTimeFormated}
 										getVideoCurrentTime={getVideoCurrentTime}
 										currentTimeSec={currentTimeSec}
 										addNoteToSummary={addNoteToSummary}
-									></FooterAddButton>
+									/>
+							
+
+									
 								</div>
 							</SummarysContext.Provider>
 						</div>

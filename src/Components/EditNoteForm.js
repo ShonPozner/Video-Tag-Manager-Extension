@@ -1,46 +1,45 @@
 import React, {useState} from "react"
 import "./addNoteForm.css";
-// import { CKEditor } from '@ckeditor/ckeditor5-react';
-// import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 import EditorComponent from "./StyleEditor";
 import {PageUrl} from '../Hooks/constants';
 
 const YoutubeDisableHotkeys = () => {
-    console.log(`Focuse new disable_hotkeys`);
     var hotkey_manager = document.getElementsByTagName('yt-Hotkey-Manager')[0];
     if (hotkey_manager) {
         hotkey_manager.parentNode.removeChild(hotkey_manager);
     }
 }
-const AddNoteForm = (props) => {
-    const [title, setTitle] = useState('');
-    const [tag, setTag] = useState('');
+
+const EditNoteForm = (props) => {
+    console.log(`props!!!!!`, props);
+
+    const [title, setTitle] = useState(props.note.title);
+    const [tag, setTag] = useState(props.note.tag);
     //TODO FIX TO PROPS ONLY
-    const [formatedTime, setFormatedTime] = useState(PageUrl.includes("http://localhost") ? "00:00:00":  props.timeFormted);
+    const [formatedTime, setFormatedTime] = useState(PageUrl.includes("http://localhost") ? "00:00:00":  props.note.time);
     // const [formatedTime, setFormatedTime] = useState("00:00:00");
-    const [content, setContent] = useState('<p>Add note content 😀</p>');
+    const [content, setContent] = useState(props.note.content);
 
 
     const onSubmit = (e) => {
 
         e.preventDefault();
-        
+    
         // if (!content) {
         //     alert('please add Content')
         //     return
         // }
         // can add more cheacking format time or get default tag and so on...
 
-        const newNote = { 
-            title: title,
-            content: content,
-            time: formatedTime,
-            tag: tag,
-            timeSec: getSecTime(),
-        }
-
-        props.addNote(newNote);
+        const newNote = props.note;
+        newNote.title = title;
+        newNote.content= content;
+        newNote.time = formatedTime;
+        newNote.tag = tag;
+        newNote.timeSec = getSecTime();
+        
+        props.editNoteFun(newNote);
         props.setShowEditNoteNumber(null);
     }
 
@@ -85,4 +84,4 @@ const AddNoteForm = (props) => {
     
 }
 
-export default AddNoteForm; 
+export default EditNoteForm; 

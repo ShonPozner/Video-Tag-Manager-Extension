@@ -43,6 +43,7 @@ const NoteApi = () => {
 
 	const deleteNote = (note) => {
 		console.log(`deleteNote`, note); //DELETEME
+		console.log(`delete test!`, JSON.stringify(note[summaryIdKeyName]))
 
 		const queryParams = {
 			queryStringParameters: {

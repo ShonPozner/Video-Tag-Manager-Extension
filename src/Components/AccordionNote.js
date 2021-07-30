@@ -8,10 +8,11 @@ import parse from 'html-react-parser';
 import "./AccordionNote.css";
 
 // Hooks...
-const AccordionNote = ({key, removeFunction, note}) => {
+const AccordionNote = ({key, removeFunction, note, setShowEditNoteNumber}) => {
 	const [setActive, setActiveState] = useState("");
 	const [setHeight, setHeightState] = useState("0px");
 	const [setRotate, setRotateState] = useState("accordion_icon");
+
 
 	const content = useRef(null);
 
@@ -28,15 +29,22 @@ const AccordionNote = ({key, removeFunction, note}) => {
 		);
 	}
 
+	const ser = (nid) => {
+		console.log(`oncEdit clock!`, nid);
+		setShowEditNoteNumber(nid);
+
+	}
+
+	
+
 	return (
 		<div className="accordion_section">
 			<button className={`accordion ${setActive}`} onClick={toggleAccordion}>
 				<p className="accordion_tag">{note.tag}</p>
 				<p className="accordion_title">{note.title}</p>
 				<div className="user-actions-icon">
-					<FaRegEdit className="actions-icon"></FaRegEdit>
+					<FaRegEdit className="actions-icon" onClick={() => ser(note.nid)}></FaRegEdit>
 					<FaTrash style={{ cursor: 'pointer' }} className="actions-icon" onClick={() =>
-						// TODO change to-> https://dev.to/isarisariver/how-to-create-a-custom-confirm-box-with-react-754
 						window.confirm("Are you sure you wish to delete this item?") &&
 						removeFunction(note)} ></FaTrash>
 
