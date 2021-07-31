@@ -31,7 +31,7 @@ const Modal = () => {
 	const [summaryState, setSummaryState] = useState([]);
 	const [notes, setNotes] = useState([]);
 
-	const { getMyLibrariesRemote, addSummaryRemote, updateSummaryRemote } = SummaryApi();
+	const { getMyLibrariesRemote, addSummaryRemote, updateSummaryRemote, getSummaryRemote, getPublicSummariesFromUrlRemote } = SummaryApi();
 	const { getNotes, updateNote, addNote, deleteNote } = NoteApi();
 	
 	/**
@@ -68,7 +68,6 @@ const Modal = () => {
 		summaryState.length > 0 ? getNotes() : setNotes([])
 
 	}, [summaryState])
-
 
 	// Re-build the session and authenticate the user
 	const authenticateUser = () => {
@@ -115,24 +114,33 @@ const Modal = () => {
 		// whatever it needs to.
 	}
 
-
 	//**************** Summary ****************//
 
 	// Fetch - get all requset (async) 
 	const fetchSummary = async () => {
-		const library = await getMyLibrariesRemote();
-		console.log(`fetchSummary, library:`, library); //DELETEME
 		var result = undefined;
-
-		library.map((summary) => {
-			if (summary["url"] === PageUrl) {
-				console.log(`summary found:`, summary);//DELETEME
-				result = summary;
+		const sid = window.localStorage[window.location.href];
+		if (sid) {
+			console.log("fetching summary using SID (cached)"); //DELETEME
+			result = await getSummaryRemote(sid);
+			console.log("servers response: ", result);
+		} else {
+			const library = await getMyLibrariesRemote();
+			console.log(`fetchSummary, library:`, library); //DELETEME
+			
+			library.map((summary) => {
+				if (summary["url"] === PageUrl) {
+					console.log(`summary found:`, summary); //DELETEME
+					result = summary;
+				}
+			});
+	
+			if (result === undefined) //DELETEME
+				console.log("summary with current url was not found");
+			else {
+				window.localStorage[window.location.href] = result.sid;
 			}
-		});
-
-		if (result === undefined) //DELETEME
-			console.log("summary with current url was not found");
+		}
 		return result;
 	}
 
@@ -165,11 +173,13 @@ const Modal = () => {
 
 			summary.sid = response.data.sid;
 			summary.createTime = response.data.createTime;
-			setSummaryState([summary]); //TODO? remove sqaure brackes
+			summary.editTime = response.data.editTime;
+
+			setSummaryState([summary]);
 		})
 		.catch(error => {
 			console.log(error);
-		})
+		});
 		
 		// SHON //DELETEME
 		// send post to server
@@ -207,6 +217,19 @@ const Modal = () => {
 		});
 	}
 
+	const getPublicSummariesFromUrl = (url) => {
+		setLoading(true);
+		getPublicSummariesFromUrlRemote(url)
+		.then(summaries => {
+			// TODO add to session storage
+			setPublicSummaries(summaries);
+			setLoading(false);
+		})
+		.catch(error => {
+			console.log(`error:`, error);
+			setLoading(false);
+		});
+	}
 
 	//**************** Notes ****************//
 
@@ -237,7 +260,6 @@ const Modal = () => {
 		return data;
 	}
 
-	//TODO param is entire note (instead of ID)
 	/**
 	 * Remove note - first delete loacl (state),  
 	 * and than send delete http command

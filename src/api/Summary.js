@@ -39,11 +39,16 @@ const SummaryApi = () => {
 	const likeValue = 1;
 	const dislikeValue = -1;
 
-	const getSummariesRemote = (uid) => {
-		console.log('fetchSummaries, path:', `/${uid}`); //DELETEME
-		// setLoading(true);
+	const getPublicSummariesFromUrlRemote = (url) => {
+		console.log('getSummariesFromUrlRemote, url:', `${url}`); //DELETEME
 
-		return API.get(apiName, `${libraryPath}/${uid}`)
+		const myInit = {
+			queryStringParameters: {
+				url: url
+			}
+		}
+
+		return API.get(apiName, `${publicSummariesPath}?url=${url}`, myInit);
 	}
 
 	const getSummaryRemote = (sid) => {
@@ -168,6 +173,7 @@ const SummaryApi = () => {
 		getSummariesSharedWithRemote,
 		getAccessRemote,
 		getMyLibrariesRemote, // NOT IN USE
+		getPublicSummariesFromUrlRemote
 	}
 }
 
