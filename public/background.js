@@ -1,6 +1,6 @@
 /* global chrome */
 
-const homepage = "http://localhost:3000/access/login";
+const homepage = "https://main.d2eyfouotrtjmo.amplifyapp.com/access/login";
 
 chrome.browserAction.onClicked.addListener(function (tab) {
 	//Show Popup window: 1. View the summary 2. Displays the Add New Tag butto

@@ -11,7 +11,7 @@ export const Direction = {
 
 
 // TODO change to real backend server
-export const Url = 'http://localhost:5000/';
+export const Url = 'https://main.d2eyfouotrtjmo.amplifyapp.com';
 
 export const PageUrl = window.location.href;
 

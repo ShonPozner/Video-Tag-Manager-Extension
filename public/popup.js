@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
  * // TODO fix to Video tag mannager webside
  */
 function openVideoTagWeb() {
-	let OpnenEditorUrl = "http://localhost:3000";
+	let OpnenEditorUrl = "https://main.d2eyfouotrtjmo.amplifyapp.com";
 	chrome.tabs.create({
 		url: OpnenEditorUrl
 	});
