@@ -34,7 +34,6 @@ const Resizable = ({ onResize }) => {
 
 
 	const handleMouseDown = (direction) => () => {
-		console.log(direction);
 		setDirection(direction);
 		setMouseDown(true);
 	};

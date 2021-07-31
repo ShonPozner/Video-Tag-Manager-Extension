@@ -17,14 +17,13 @@ function TitleAndDetails(props) {
 
 	useEffect(() => {
 		if (props.summary[0] && props.summary[0].tags !=  tags) {
-			console.log(`set!!!!`, props.summary[0].tags)
 			setTags(props.summary[0].tags);
 		}
 
 	});
 
 	const addTag = () => {
-		console.log(`addTag`, addTagInputRef.current.value); //DELETEME
+		// console.log(`addTag`, addTagInputRef.current.value); //DELETEME
 
 		const newTag = addTagInputRef.current.value;
 		if (!tags.includes(newTag) && newTag !== '') {
@@ -43,12 +42,10 @@ function TitleAndDetails(props) {
 
 
 	const deleteTag = (sid, myTag) => {
-		console.log(`deleteTag`, sid, myTag); //DELETEME
-		console.log(`tags`, tags); //DELETEME
 		const newTags = tags.filter(tag => tag !== myTag);
 		const copySummary = { ...props.summary[0] };
 		copySummary.tags = newTags;
-		console.log("affter update copySummary", copySummary); //DELETEME
+		// console.log("affter update copySummary", copySummary); //DELETEME
 		props.updateSummary(copySummary);
 		setTags(newTags);
 	};

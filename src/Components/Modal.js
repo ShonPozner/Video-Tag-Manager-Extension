@@ -64,16 +64,13 @@ const Modal = () => {
 			setNotes(notesFromServer.sort((a, b) =>
 				a.timeSec > b.timeSec ? 1 : -1));
 		}
-		console.log("test: ", summaryState);
 		summaryState.length > 0 ? getNotes() : setNotes([])
 
 	}, [summaryState])
 
 	// Re-build the session and authenticate the user
 	const authenticateUser = () => {
-		console.log("authenticateUser, before JSON.parse"); //DELETEME
 		const session = JSON.parse(window.localStorage["vtm-session"]);
-		console.log(`authenticateUser, session:`, session);
 
 		let idToken = new CognitoIdToken({
 			IdToken: session.idToken.jwtToken
@@ -121,16 +118,15 @@ const Modal = () => {
 		var result = undefined;
 		const sid = window.localStorage[window.location.href];
 		if (sid) {
-			console.log("fetching summary using SID (cached)"); //DELETEME
 			result = await getSummaryRemote(sid);
 			console.log("servers response: ", result);
 		} else {
 			const library = await getMyLibrariesRemote();
-			console.log(`fetchSummary, library:`, library); //DELETEME
+			// console.log(`fetchSummary, library:`, library); //DELETEME
 			
 			library.map((summary) => {
 				if (summary["url"] === PageUrl) {
-					console.log(`summary found:`, summary); //DELETEME
+					// console.log(`summary found:`, summary); //DELETEME
 					result = summary;
 				}
 			});
@@ -148,10 +144,10 @@ const Modal = () => {
 
 	// Create New summary, build new summary , add to state and post to setrver
 	const createNewSummary = () => {
-		console.log("createNewSummary");//DELETEME
+		// console.log("createNewSummary");//DELETEME
 
 		let newSummary = CreateNewSummaryForm();
-		console.log("newSummary:", newSummary);
+		// console.log("newSummary:", newSummary);
 
 		newSummary["authorName"] = JSON.parse(window.localStorage["vtm-session"]).accessToken.payload.username;
 		newSummary["imgUrl"] = GetImageFromUrl(window.location.hostname);
@@ -162,10 +158,10 @@ const Modal = () => {
 
 	// Post the new summary to server (async)
 	const postNewSummary = async (summary) => {
-		console.log("postNewSummary", summary); //DELETEME
+		// console.log("postNewSummary", summary); //DELETEME
 		addSummaryRemote(summary)
 		.then(response => {
-			console.log("server's response:", response); //DELETEME
+			// console.log("server's response:", response); //DELETEME
 
 			summary.sid = response.data.sid;
 			summary.createTime = response.data.createTime;
@@ -192,19 +188,19 @@ const Modal = () => {
 
 	// Update Summary put (async)
 	const UpdateSummary = async (newParamtersSummarys) => {
-		console.log("UpdateSummary, summaryState:", summaryState);
+		// console.log("UpdateSummary, summaryState:", summaryState);
 
 		let newSummary = summaryState[0];
 		newSummary.title = newParamtersSummarys.title;
 		newSummary.tags = newParamtersSummarys.tags;
 		newSummary.editTime = newParamtersSummarys.editTime;
 
-		console.log("befor update summary - ", newSummary);
+		// console.log("befor update summary - ", newSummary);
 
 		// setState (loacl)
 		updateSummaryRemote(newSummary)
 		.then(response => {
-			console.log(response); //DELETEME
+			// console.log(response); //DELETEME
 			setSummaryState([newSummary]);
 			console.log(`summaryState`, summaryState);
 		})
@@ -229,7 +225,7 @@ const Modal = () => {
 
 	// Fetch - get all notes of this summary (async) 
 	const fetchNotes = async () => {
-		console.log(`fetchNotes, summaryState`, summaryState);
+		// console.log(`fetchNotes, summaryState`, summaryState);
 
 		try {
 			let notes = await getNotes(summaryState[0].sid);
@@ -259,10 +255,10 @@ const Modal = () => {
 	 * @param {int} noteId 
 	 */
 	const removeNoteFromSummary = async (note) => {
-		console.log("removeNoteFromSummary, note: ", note); //DELETEME
+		// console.log("removeNoteFromSummary, note: ", note); //DELETEME
 		let response = await deleteNote(note);
 		
-		console.log(`response:`, response);
+		// console.log(`response:`, response);
 		setNotes(notes.filter((curNote) => curNote.nid !== note.nid))
 	};
 
@@ -277,7 +273,7 @@ const Modal = () => {
 
         addNote(note)
 			.then(response => {
-				console.log("response: ", response);
+				// console.log("response: ", response);
 				note["nid"] = response.data["nid"];
 				note["createTime"] = response.data["createTime"];
 				note["editTime"] = response.data["editTime"];
@@ -300,7 +296,7 @@ const Modal = () => {
 
         updateNote(note)
 			.then(response => {
-				console.log(`update note response:`, response); //DELETEME
+				// console.log(`update note response:`, response); //DELETEME
 				setNotes(prev => prev.map(item => (item.nid === note.nid ? note : item)));
 			})
 			.catch(error => {
@@ -331,7 +327,7 @@ const Modal = () => {
 	//close the Editor section (extension)
 	const closeVideoTagSection = () => {
 		let videoTagSection = document.getElementById("video-tag-manger-section");
-		console.log(videoTagSection)
+		// console.log(videoTagSection)
 		videoTagSection.remove();
 	};
 
@@ -357,7 +353,6 @@ const Modal = () => {
 
 		const resizeLeft = () => {
 			modalSection.style.width = `${width - movementX}px`;
-			console.log();
 			modalSection.style.left = `${x + movementX}px`;
 		};
 

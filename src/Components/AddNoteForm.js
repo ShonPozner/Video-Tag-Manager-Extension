@@ -7,7 +7,7 @@ import EditorComponent from "./StyleEditor";
 import {PageUrl} from '../Hooks/constants';
 
 const YoutubeDisableHotkeys = () => {
-    console.log(`Focuse new disable_hotkeys`);
+    // console.log(`Focuse new disable_hotkeys`);
     var hotkey_manager = document.getElementsByTagName('yt-Hotkey-Manager')[0];
     if (hotkey_manager) {
         hotkey_manager.parentNode.removeChild(hotkey_manager);

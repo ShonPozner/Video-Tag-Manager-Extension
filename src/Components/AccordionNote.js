@@ -30,7 +30,7 @@ const AccordionNote = ({key, removeFunction, note, setShowEditNoteNumber}) => {
 	}
 
 	const ser = (nid) => {
-		console.log(`oncEdit clock!`, nid);
+		// console.log(`oncEdit clock!`, nid);
 		if(nid === undefined || nid === "") {
 			setShowEditNoteNumber("NEW SUMMARY");
 		} else{

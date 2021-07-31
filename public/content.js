@@ -3,7 +3,7 @@
 const homepage = "http://localhost:3000/access/login";
 
 chrome.runtime.onMessage.addListener(function (request, sender) {
-	console.log('contents, request:', request);
+	// console.log('contents, request:', request);
 
 	if (request.message == "Open Summary") {
 		main();
@@ -17,7 +17,7 @@ function main() {
 	const extensionOrigin = 'chrome-extension://' + chrome.runtime.id;
 
 	chrome.runtime.sendMessage({message: "vtm-session-request"}, function(response) {
-		console.log("sendMessage response:", response);
+		// console.log("sendMessage response:", response);
 		if (response) {
 			window.localStorage.setItem("vtm-session", response);
 
@@ -73,7 +73,7 @@ function secToHoSecMinFormat(timeInSec) {
 
 /**
  * Waiting for GET_CURRENT_TIME request
- * Then רreturn a message of the current time in the video 
+ * Then return a message of the current time in the video 
  * 
  * @param {Event Object} event 
  */

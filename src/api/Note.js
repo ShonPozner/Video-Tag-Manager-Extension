@@ -24,7 +24,7 @@ const NoteApi = () => {
 	const createdKeyName = "createTime";
 
 	const getNotes = (sid) => {
-		console.log(`getNotes`, sid); //DELETEME
+		// console.log(`getNotes`, sid); //DELETEME
 
 		const queryParams = {
 			queryStringParameters: {
@@ -42,8 +42,8 @@ const NoteApi = () => {
 	};
 
 	const deleteNote = (note) => {
-		console.log(`deleteNote`, note); //DELETEME
-		console.log(`delete test!`, JSON.stringify(note[summaryIdKeyName]))
+		// console.log(`deleteNote`, note); //DELETEME
+		// console.log(`delete test!`, JSON.stringify(note[summaryIdKeyName]))
 
 		const queryParams = {
 			queryStringParameters: {
@@ -58,7 +58,7 @@ const NoteApi = () => {
 	};
 
 	const updateNote = (note) => {
-		console.log(`updateNote`, note); //DELETEME
+		// console.log(`updateNote`, note); //DELETEME
 
 		if (!note[summaryIdKeyName] || typeof (note[createdKeyName]) !== typeof (1)) {
 			console.log('invalid note object', note); //DELETEME

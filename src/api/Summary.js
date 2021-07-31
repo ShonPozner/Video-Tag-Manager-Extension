@@ -40,7 +40,7 @@ const SummaryApi = () => {
 	const dislikeValue = -1;
 
 	const getPublicSummariesFromUrlRemote = (url) => {
-		console.log('getSummariesFromUrlRemote, url:', `${url}`); //DELETEME
+		// console.log('getSummariesFromUrlRemote, url:', `${url}`); //DELETEME
 
 		const myInit = {
 			queryStringParameters: {
@@ -52,7 +52,7 @@ const SummaryApi = () => {
 	}
 
 	const getSummaryRemote = (sid) => {
-		console.log('getSummary, sid:', sid); //DELETEME
+		// console.log('getSummary, sid:', sid); //DELETEME
 
 		const myInit = {
 			queryStringParameters: {
@@ -64,14 +64,14 @@ const SummaryApi = () => {
 	}
 
 	const addSummaryRemote = (summary) => {
-		console.log('addSummary:', summary); //DELETEME
+		// console.log('addSummary:', summary); //DELETEME
 
 		//TODO lid (summary.lid)
 		return API.post(apiName, summaryPath, { body: summary })
 	}
 
 	const updateSummaryRemote = async (summary) => {
-		console.log('updateSummary') //DELETEME
+		// console.log('updateSummary') //DELETEME
 		const newSummary = {...summary}
 
 		newSummary[summaryIdKeyName] = JSON.stringify(summary[summaryIdKeyName]);
@@ -82,7 +82,7 @@ const SummaryApi = () => {
 	}
 
 	const deleteSummaryRemote = (sid) => {
-		console.log('delete summary sid: ', sid); //DELETEME
+		// console.log('delete summary sid: ', sid); //DELETEME
 
 		const queryParams = {
 			queryStringParameters: {
@@ -94,14 +94,14 @@ const SummaryApi = () => {
 	}
 
 	const toggleFavoriteRemote = (summary) => {
-		console.log(`toggleFavorite`, summary); //DELETEME
+		// console.log(`toggleFavorite`, summary); //DELETEME
 
 		summary[summaryIdKeyName] = JSON.stringify(summary[summaryIdKeyName]);
 		return API.patch(apiName, summaryPath, { body: summary });
 	}
 
 	const toggleLikeRemote = async (sid, likes) => {
-		console.log(`toggle like ->  `, sid); //DELETEME
+		// console.log(`toggle like ->  `, sid); //DELETEME
 
 		const toUpdate = {
 			[summaryIdKeyName]: JSON.stringify(toUpdate[summaryIdKeyName]),
@@ -113,13 +113,13 @@ const SummaryApi = () => {
 	};
 
 	const getMyLibrariesRemote = () => {
-		console.log('getMyLibraries'); //DELETEME
+		// console.log('getMyLibraries'); //DELETEME
 
 		return API.get(apiName, myLibrariesPath);
 	}
 
 	const editAccessRemote = (sid, access) => {
-		console.log('editAcces, access:', access); //DELETEME
+		// console.log('editAcces, access:', access); //DELETEME
 
 		access[summaryIdKeyName] = JSON.stringify(sid);
 
@@ -127,7 +127,7 @@ const SummaryApi = () => {
 	}
 
 	const getAccessRemote = (sid) => {
-		console.log('getSummaryAccess, sid:', sid); //DELETEME
+		// console.log('getSummaryAccess, sid:', sid); //DELETEME
 
 		const params = {
 			queryStringParameters: {
@@ -139,20 +139,20 @@ const SummaryApi = () => {
 	}
 
 	const getPublicSummariesRemote = () => {
-		console.log(`getPublicSummaries, path:`, publicSummariesPath); //DELETEME
+		// console.log(`getPublicSummaries, path:`, publicSummariesPath); //DELETEME
 		// setLoading(true);
 		return API.get(apiName, publicSummariesPath);
 	}
 
 	const getSummariesSharedWithRemote = (username) => {
-		console.log('getSummariesSharedWithMe, username:', username); //DELETEME
+		// console.log('getSummariesSharedWithMe, username:', username); //DELETEME
 		const queryParams = {
 			queryStringParameters: {
 				username: username
 			}
 		}
 
-		console.log(`params:`, queryParams);//DELETEME
+		// console.log(`params:`, queryParams);//DELETEME
 		return API.get(apiName, sharedWithMePath, queryParams);
 	}
 

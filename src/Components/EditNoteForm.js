@@ -12,7 +12,6 @@ const YoutubeDisableHotkeys = () => {
 }
 
 const EditNoteForm = (props) => {
-    console.log(`props!!!!!`, props);
 
     const [title, setTitle] = useState(props.note.title);
     const [tag, setTag] = useState(props.note.tag);

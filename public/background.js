@@ -12,7 +12,7 @@ chrome.browserAction.onClicked.addListener(function (tab) {
 
 // Listen for incoming external messages.
 chrome.runtime.onMessageExternal.addListener(async function (request, sender, sendResponse) {
-	console.log("background, onMessageExternal, request:", request);
+	// console.log("background, onMessageExternal, request:", request);
 
 	if (request) {
 		const session = JSON.stringify(request);
@@ -22,11 +22,11 @@ chrome.runtime.onMessageExternal.addListener(async function (request, sender, se
 });
 
 chrome.runtime.onMessage.addListener(async function (request, sender, sendResponse) {
-	console.log("background, onMessage, request:", request);
+	// console.log("background, onMessage, request:", request);
 
 	if (request.message && request.message === "vtm-session-request") {
 		if (window.localStorage["vtm-session"]) {
-			console.log("received vtm-session request, replying with:", window.localStorage["vtm-session"]); //DELETEME
+			// console.log("received vtm-session request, replying with:", window.localStorage["vtm-session"]); //DELETEME
 			sendResponse(window.localStorage["vtm-session"]);
 		} else {
 			sendResponse(undefined);
