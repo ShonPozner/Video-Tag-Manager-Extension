@@ -3,9 +3,9 @@ import React from 'react';
 const InputAddTag = {
     display: "block",
     position:"absolute",
-    top:"25px",
     fontWeight: "700",
-    left: "50px",
+    right: "80px",
+    bottom: "1px",
 
 }
 

@@ -108,19 +108,20 @@ function TitleAndDetails(props) {
 										<TiMinus className='add-icon' onClick={toggleShowAddTagInput}></TiMinus>:
 										<CgAdd className='add-icon' onClick={toggleShowAddTagInput}></CgAdd>
 									}
-									<SubmitButton visibility={showAddTagInput} ref={addTagInputRef}
-									placeHolder='Enter new tag' submitValue='Add' submitFun={() => addTag()}></SubmitButton>
 									</li>
 								</ul>
 								<ul className="list-tags">
 									<li className="li-icon-info">
+										<BsInfoCircle id="info-icon-svg" className='info-icon'></BsInfoCircle>
 										{/* TODO ADD PARAMTERS? */}
-										<span>Author: {summary.authorName}<br></br>
+										<span id="span-info">Author: {summary.authorName}<br></br>
 											Created: {FormatedTime(summary.createTime)} <br></br>
 											Modified: {FormatedTime(summary.editTime)} <br></br>
 										</span>
-										<BsInfoCircle className='info-icon'></BsInfoCircle>
+										<SubmitButton visibility={showAddTagInput} ref={addTagInputRef}
+									placeHolder='Enter new tag' submitValue='Add' submitFun={() => addTag()}></SubmitButton>	
 									</li>
+
 										
 								</ul>
 									
