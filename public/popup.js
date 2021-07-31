@@ -38,6 +38,9 @@ function displaymySummary() {
  * Send a message to the active tab that summary must be loaded  
  */
 function openDiscoverSection() {
-	self.close()
-	alert("Not ready yet");
+	self.close();
+	chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+		var activeTab = tabs[0];
+		chrome.tabs.sendMessage(activeTab.id, { message: 'Discover' });
+	})
 }

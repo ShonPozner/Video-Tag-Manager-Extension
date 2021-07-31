@@ -74,7 +74,7 @@ const UserApi = (userAttributes, setUserAttributes, history) => {
 		// https://stackoverflow.com/questions/60244048/login-to-chrome-extension-via-website-with-aws-amplify
 		//Get the current session from aws amplify
 		const session = await Auth.currentSession();
-		const extensionId = 'keohhbpcjlkoohpjpbeojdakdjlneebn';
+		const extensionId = 'plemdgmijbjknnggfebbjdifoaemagkc';
 
 		// console.log('sending message to ext1:', extensionId);
 		// console.log('chrome:', chrome);

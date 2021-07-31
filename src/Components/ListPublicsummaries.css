@@ -1,0 +1,65 @@
+.accordion-notes1 {
+    padding-bottom:0rem; 
+  }
+
+
+  /* Style the accordion section */
+.accordion_section1 {
+    display: flex;
+    flex-direction: column;
+    /* max-width: fit-content; */
+    width: 350px;
+  }
+
+  .accordion1 {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    border: none;
+    outline: none;
+    transition: background-color 0.6s ease;
+  }
+
+  /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.accordion1:hover,
+.active1 {
+  background-color: #ccc;
+}
+
+.user-actions-icon1 {
+    color: black;
+    margin-left: auto;
+    float:right;
+    display: block;
+  
+  }
+
+/* Style the accordion content title */
+.accordion_title1 {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    margin-left: 10px;
+  }
+
+
+  .accordion_tag1 {
+    color: blue;
+    font-weight: bold;
+    border: 1px solid rgb(80, 77, 77)!important;
+    border-radius: 8px;
+    margin: 3px;
+  }  
+
+  .hart-icon{
+      color:red;
+  }
+
+  .title1{
+      color: #eee;
+      align-items: center;
+      margin: 10px 20px;
+  }

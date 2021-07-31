@@ -6,13 +6,15 @@ chrome.runtime.onMessage.addListener(function (request, sender) {
 	// console.log('contents, request:', request);
 
 	if (request.message == "Open Summary") {
-		main();
+		main("GetSummayFromMylib");
 	} else if (request.message === "vtm-session") {
 		window.localStorage.setItem("vtm-session", request.session);
+	} else if (request.message === "Discover") {
+		main("GetSummayFromDiscover");
 	}
 });
 
-function main() {
+function main(prop) {
 	// Get the extensnsion origen url
 	const extensionOrigin = 'chrome-extension://' + chrome.runtime.id;
 
@@ -29,7 +31,7 @@ function main() {
 		
 						// Create the html that inject to the web
 						var styleStashHTML = html.replace(/\/static\//g, `${extensionOrigin}/static/`);
-						styleStashHTML = '<div id="video-tag-manger-section">' + styleStashHTML + '</div>'
+						styleStashHTML = '<div id="video-tag-manger-section">' + styleStashHTML + '<div id =' + prop + '></div>' + '</div>'
 						var videoTagSection = document.getElementById("video-tag-manger-section");
 		
 						if (videoTagSection != null) {  // Check if the editor desplay allredy
@@ -44,9 +46,9 @@ function main() {
 			}
 		}
 	});
-
-	
 }
+
+
 
 window.addEventListener("message", function (event) {
 	if (event.source !== window) return;
@@ -86,5 +88,3 @@ async function onDidReceiveMessage(event) {
 		window.postMessage({ type: "CURRENT_TIME_RESULT", currentTimeFormated: currentTimeFormated, currentTimeSec: currentTimeSec }, "*");
 	}
 }
-
-

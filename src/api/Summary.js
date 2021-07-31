@@ -40,7 +40,7 @@ const SummaryApi = () => {
 	const dislikeValue = -1;
 
 	const getPublicSummariesFromUrlRemote = (url) => {
-		// console.log('getSummariesFromUrlRemote, url:', `${url}`); //DELETEME
+		console.log('getSummariesFromUrlRemote, url:', `${url}`); //DELETEME
 
 		const myInit = {
 			queryStringParameters: {
