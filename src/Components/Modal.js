@@ -135,8 +135,10 @@ const Modal = () => {
 				}
 			});
 	
-			if (result === undefined) //DELETEME
+			if (result === undefined) { //DELETEME
 				console.log("summary with current url was not found");
+				window.localStorage.removeItem(window.location.href);
+			}
 			else {
 				window.localStorage[window.location.href] = result.sid;
 			}
@@ -151,17 +153,11 @@ const Modal = () => {
 		let newSummary = CreateNewSummaryForm();
 		console.log("newSummary:", newSummary);
 
-		Auth.currentAuthenticatedUser()
-			.then(user => {
-				console.log("user:", user); //DELETEME
-				newSummary["authorName"] = JSON.parse(window.localStorage["vtm-session"]).accessToken.payload.username;
-				newSummary["imgUrl"] = GetImageFromUrl(window.location.hostname);
-				console.log("newSummary:", newSummary); //DELETEME
-				postNewSummary(newSummary);
-			})
-			.catch(error => {
-				console.log(error);
-			})
+		newSummary["authorName"] = JSON.parse(window.localStorage["vtm-session"]).accessToken.payload.username;
+		newSummary["imgUrl"] = GetImageFromUrl(window.location.hostname);
+
+		console.log("newSummary:", newSummary); //DELETEME
+		postNewSummary(newSummary);
 	}
 
 	// Post the new summary to server (async)

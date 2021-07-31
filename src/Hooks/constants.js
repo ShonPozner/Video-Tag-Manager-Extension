@@ -44,21 +44,13 @@ export const GetRandomId = () => {
 }
 
 export const GetImageFromUrl = (url) => {
-	var result = "/static/media/"
-
-	if (url.includes("youtube.")) {
-		result.concat("youtube.jpg");
-	} else if (url.includes("zoom.")) {
-		result.concat("zoom.jpg");
-	} else if (url.includes("sharepoint.")) {
-		result.concat("sharepoint.png");
-	} else if (url.includes("drive.google.")) {
-		result.concat("google_drive.jpg");
-	} else {
-		result.concat("1Tacking_note.png");
+	switch (true) {
+		case url.includes("youtube."): return "youtube";
+		case url.includes("zoom."): return "zoom";
+		case url.includes("sharepoint."): return "sharepoint";
+		case url.includes("drive.google."): return "google_drive";
+		default: return "image unknown";
 	}
-
-	return result;
 }
 
 
