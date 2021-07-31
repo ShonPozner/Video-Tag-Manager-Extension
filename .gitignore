@@ -2,9 +2,7 @@ package-lock.json
 
 package.json
 # Omer
-src/backgroundJS.js
-babelsrc.babelsrc
-webpack.js
+test.js
 
 # Logs
 logs

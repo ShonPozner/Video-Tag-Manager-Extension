@@ -8,7 +8,7 @@ import SummarysContext from "../Contexts/SummarysContext";
 // import FooterAddButton from './FooterAddButton';
 import Resizable from '../Hooks/Resizable';
 
-import { Direction, Url, CreateNewSummaryForm, GetRandomId, HashPageUrl, PageUrl } from '../Hooks/constants';
+import { Direction, Url, CreateNewSummaryForm, GetRandomId, HashPageUrl, PageUrl, GetImageFromUrl } from '../Hooks/constants';
 
 import SummaryApi from "../api/Summary";
 import NoteApi from "../api/Note";
@@ -155,7 +155,7 @@ const Modal = () => {
 			.then(user => {
 				console.log("user:", user); //DELETEME
 				newSummary["authorName"] = JSON.parse(window.localStorage["vtm-session"]).accessToken.payload.username;
-				newSummary["imgUrl"] = "/static/media/1MassesWisdom.06a32550.png"; //TODO
+				newSummary["imgUrl"] = GetImageFromUrl(window.location.hostname);
 				console.log("newSummary:", newSummary); //DELETEME
 				postNewSummary(newSummary);
 			})
@@ -218,16 +218,13 @@ const Modal = () => {
 	}
 
 	const getPublicSummariesFromUrl = (url) => {
-		setLoading(true);
 		getPublicSummariesFromUrlRemote(url)
 		.then(summaries => {
-			// TODO add to session storage
-			setPublicSummaries(summaries);
-			setLoading(false);
+			// TODO
+			// setPublicSummaries(summaries);
 		})
 		.catch(error => {
 			console.log(`error:`, error);
-			setLoading(false);
 		});
 	}
 

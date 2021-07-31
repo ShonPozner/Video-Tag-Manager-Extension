@@ -43,6 +43,23 @@ export const GetRandomId = () => {
 	return Math.floor(Math.random() * 10000000) + 1;
 }
 
+export const GetImageFromUrl = (url) => {
+	var result = "/static/media/"
+
+	if (url.includes("youtube.")) {
+		result.concat("youtube.jpg");
+	} else if (url.includes("zoom.")) {
+		result.concat("zoom.jpg");
+	} else if (url.includes("sharepoint.")) {
+		result.concat("sharepoint.png");
+	} else if (url.includes("drive.google.")) {
+		result.concat("google_drive.jpg");
+	} else {
+		result.concat("1Tacking_note.png");
+	}
+
+	return result;
+}
 
 
 export const FormatedTime = (date) => {
