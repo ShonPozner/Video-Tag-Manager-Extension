@@ -6,6 +6,7 @@ import AccordionNotes from './AccordionNotes';
 import TitleAndDetails from './TitleAndDetails';
 import SummarysContext from "../Contexts/SummarysContext";
 import ListPublicsummaries from './ListPublicsummaries';
+import EmptyDiscover from './EmptyDiscover';
 // import FooterAddButton from './FooterAddButton';
 import Resizable from '../Hooks/Resizable';
 
@@ -32,7 +33,8 @@ const Modal2 = () => {
 	const [summaryState, setSummaryState] = useState([]);
 	const [publicSummaryState, setPublicSummaryState] = useState([]);
 	const [notes, setNotes] = useState([]);
-	const [rady, setRady] = useState(0);
+	const [ready, setReady] = useState(-1);
+	
 
 	const { getMyLibrariesRemote, addSummaryRemote, updateSummaryRemote, getSummaryRemote, getPublicSummariesFromUrlRemote } = SummaryApi();
 	const { getNotes, updateNote, addNote, deleteNote } = NoteApi();
@@ -44,32 +46,30 @@ const Modal2 = () => {
 	 */
 	useEffect(() => {
 		authenticateUser();
-
-
 		const getSummary = async () => {
-			
 			await getPublicSummariesFromUrl(window.location.href);
 		}
-
 		getSummary();
 	}, [])
-
-
-
 
 	useEffect(() => {
 		console.log(`summaryFromServer`, publicSummaryState);
 
-		if (publicSummaryState === undefined) {
-			createNewSummary();
-			setRady(1);
+		if(ready === -1) {
+			return;
+		}
+		else if (publicSummaryState === undefined || publicSummaryState.length === 0) {
+			console.log(`set to 2|!!!!!`);
+			setReady(2);
 		}
 		else if (publicSummaryState.length > 1) {
+			console.log(`set to 0|!!!!!`);
 			console.log(`summa`, publicSummaryState);
-			setRady(0);
+			setReady(0);
 		} else {
+			console.log(`set to 1!!!!!`);
 			setSummaryState(publicSummaryState);
-			setRady(1);
+			setReady(1);
 		}
 	}, [publicSummaryState])
 
@@ -132,34 +132,6 @@ const Modal2 = () => {
 
 	//**************** Summary ****************//
 
-	// Fetch - get all requset (async) 
-	const fetchSummary = async () => {
-		var result = undefined;
-		const sid = window.localStorage[window.location.href];
-		if (sid) {
-			result = await getSummaryRemote(sid);
-			console.log("servers response: ", result);
-		} else {
-			const library = await getMyLibrariesRemote();
-			// console.log(`fetchSummary, library:`, library); //DELETEME
-			
-			library.map((summary) => {
-				if (summary["url"] === PageUrl) {
-					// console.log(`summary found:`, summary); //DELETEME
-					result = summary;
-				}
-			});
-	
-			if (result === undefined) { //DELETEME
-				console.log("summary with current url was not found");
-				window.localStorage.removeItem(window.location.href);
-			}
-			else {
-				window.localStorage[window.location.href] = result.sid;
-			}
-		}
-		return result;
-	}
 
 	// Create New summary, build new summary , add to state and post to setrver
 	const createNewSummary = () => {
@@ -180,29 +152,16 @@ const Modal2 = () => {
 		// console.log("postNewSummary", summary); //DELETEME
 		addSummaryRemote(summary)
 		.then(response => {
-			// console.log("server's response:", response); //DELETEME
-
+			console.log("server's response:", response); //DELETEME
 			summary.sid = response.data.sid;
 			summary.createTime = response.data.createTime;
 			summary.editTime = response.data.editTime;
-
 			setSummaryState([summary]);
+			setReady(1);
 		})
 		.catch(error => {
 			console.log(error);
 		});
-		
-		// SHON //DELETEME
-		// send post to server
-		// const response = await fetch(Url + "summarys",
-		// {
-		// 	method: "POST",
-		// 	headers: {'Content-type': 'application/json', },
-		// 	body: JSON.stringify(summary)
-		// })
-
-		// const notesFromServer = await fetchSummary(); // WHY?
-		// setSummaryState(notesFromServer);
 	}
 
 	// Update Summary put (async)
@@ -231,7 +190,8 @@ const Modal2 = () => {
 	const getPublicSummariesFromUrl = (url) => {
 		getPublicSummariesFromUrlRemote(url)
 		.then(summaries => {
-			// TODO
+			console.log(`summaries`, summaries);
+			setReady(10);
 			setPublicSummaryState(summaries);
 		})
 		.catch(error => {
@@ -431,7 +391,9 @@ const Modal2 = () => {
 					}}>
 						<div className="modal-window-inner-border" ref={modalRef}>
 							{
-								!rady ? <ListPublicsummaries setPublicSummaryState={setPublicSummaryState} publicSummaryState={publicSummaryState}></ListPublicsummaries> :
+								ready  === -1 || ready === 10 ? <h2>Loading...</h2>:
+								ready === 2 ? <EmptyDiscover createNewSummary={createNewSummary}></EmptyDiscover>:
+								ready === 0 ? <ListPublicsummaries setPublicSummaryState={setPublicSummaryState} publicSummaryState={publicSummaryState}></ListPublicsummaries> :
 								<SummarysContext.Provider value={{
 									summary: summaryState,
 									notes: notes,

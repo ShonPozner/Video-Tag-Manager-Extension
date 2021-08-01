@@ -8,22 +8,29 @@ import ModalProvider from './Contexts/ModalProvider';
  * @return {null}
  */
 function App() {
-	const [runMode, setRunMode] = useState(1);
+	const [runMode, setRunMode] = useState(-1);
 
 	useEffect(() => {
 
 		const discover = document.getElementById('GetSummayFromDiscover');
 		if (discover) {
-			setRunMode(0)
+			setRunMode(0);
+			console.log(`set disc.. mode`);
+
+		}else {
+			console.log(`set mysummary mode`);
+			setRunMode(1);
 		}
+		
+
 	}, [])
 
 
 	return (
 		<ModalProvider> 
-			{ runMode ?  <Modal /> :
-			<Modal2></Modal2>
-
+			{ runMode  === 1 ? <Modal /> :
+			runMode === 0 ? <Modal2></Modal2>:
+			<></>
 			}
 		</ModalProvider>
 	);
