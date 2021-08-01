@@ -15,10 +15,9 @@ function App() {
 		const discover = document.getElementById('GetSummayFromDiscover');
 		if (discover) {
 			setRunMode(0);
-			console.log(`set disc.. mode`);
-
+			// console.log(`set disc.. mode`);
 		}else {
-			console.log(`set mysummary mode`);
+			// console.log(`set mysummary mode`);
 			setRunMode(1);
 		}
 		

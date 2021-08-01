@@ -115,32 +115,54 @@ const Modal = () => {
 
 	// Fetch - get all requset (async) 
 	const fetchSummary = async () => {
+		window.localStorage.removeItem(window.location.href);
+		
 		var result = undefined;
-		const sid = window.localStorage[window.location.href];
-		if (sid) {
-			result = await getSummaryRemote(sid);
-			console.log("servers response: ", result);
-		} else {
-			const library = await getMyLibrariesRemote();
-			// console.log(`fetchSummary, library:`, library); //DELETEME
-			
-			library.map((summary) => {
-				if (summary["url"] === PageUrl) {
-					// console.log(`summary found:`, summary); //DELETEME
-					result = summary;
-				}
-			});
-	
-			if (result === undefined) { //DELETEME
-				console.log("summary with current url was not found");
-				window.localStorage.removeItem(window.location.href);
+		// const sid = window.localStorage[window.location.href];
+		
+		// if (sid) {
+		// 	result = await getSummaryRemote(sid);
+		// 	console.log("servers response: ", result);
+		// } else {
+		const library = await getMyLibrariesRemote();
+		// console.log(`fetchSummary, library:`, library); //DELETEME
+		
+		library.map((summary) => {
+			if (summary["url"] === PageUrl) {
+				// console.log(`summary found:`, summary); //DELETEME
+				result = summary;
 			}
-			else {
-				window.localStorage[window.location.href] = result.sid;
-			}
-		}
+		});
+
+		// if (result === undefined) { //DELETEME
+		// 	console.log("summary with current url was not found");
+		// }
+		// else {
+			// window.localStorage[window.location.href] = result.sid;
+		// }
+		// }
 		return result;
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
 
 	// Create New summary, build new summary , add to state and post to setrver
 	const createNewSummary = () => {

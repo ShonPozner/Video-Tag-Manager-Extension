@@ -53,19 +53,15 @@ const Modal2 = () => {
 	}, [])
 
 	useEffect(() => {
-		console.log(`summaryFromServer`, publicSummaryState);
+		// console.log(`summaryFromServer`, publicSummaryState);
 
 		if(ready === -1) {
 			return;
 		}
 		else if (publicSummaryState === undefined || publicSummaryState.length === 0) {
 			setReady(2);
-		}
-		else if (publicSummaryState.length > 1) {
-			setReady(0);
 		} else {
-			setSummaryState(publicSummaryState);
-			setReady(1);
+			setReady(0);
 		}
 	}, [publicSummaryState])
 
@@ -355,6 +351,7 @@ const Modal2 = () => {
 		}
 	};
 
+
 	return (
 		<ModalContext.Consumer>
 			{({ windowPosition, hasDraggedWindowPosition, currentTimeSec, currentTimeFormated, getVideoCurrentTime }) => (
@@ -370,7 +367,7 @@ const Modal2 = () => {
 							{
 								ready  === -1 || ready === 10 ? <h2>Loading...</h2>:
 								ready === 2 ? <EmptyDiscover createNewSummary={createNewSummary}></EmptyDiscover>:
-								ready === 0 ? <ListPublicsummaries setPublicSummaryState={setPublicSummaryState} publicSummaryState={publicSummaryState}></ListPublicsummaries> :
+								ready === 0 ? <ListPublicsummaries setSummaryState={setSummaryState} setReady={setReady} publicSummaryState={publicSummaryState}></ListPublicsummaries> :
 								<SummarysContext.Provider value={{
 									summary: summaryState,
 									notes: notes,

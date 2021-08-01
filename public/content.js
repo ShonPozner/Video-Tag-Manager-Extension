@@ -1,6 +1,6 @@
 /* global chrome */
 
-const homepage = "http://localhost:3000/access/login";
+const homepage = "https://main.d2eyfouotrtjmo.amplifyapp.com/access/login";
 
 chrome.runtime.onMessage.addListener(function (request, sender) {
 	// console.log('contents, request:', request);
