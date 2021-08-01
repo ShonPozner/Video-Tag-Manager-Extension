@@ -59,15 +59,11 @@ const Modal2 = () => {
 			return;
 		}
 		else if (publicSummaryState === undefined || publicSummaryState.length === 0) {
-			console.log(`set to 2|!!!!!`);
 			setReady(2);
 		}
 		else if (publicSummaryState.length > 1) {
-			console.log(`set to 0|!!!!!`);
-			console.log(`summa`, publicSummaryState);
 			setReady(0);
 		} else {
-			console.log(`set to 1!!!!!`);
 			setSummaryState(publicSummaryState);
 			setReady(1);
 		}
@@ -192,7 +188,11 @@ const Modal2 = () => {
 		.then(summaries => {
 			console.log(`summaries`, summaries);
 			setReady(10);
-			setPublicSummaryState(summaries);
+			setPublicSummaryState(summaries.sort((a, b) =>
+				a.likes.length > b.likes.length ? 1 : -1));
+
+			console.log(`publicSummaryState`, publicSummaryState);
+
 		})
 		.catch(error => {
 			console.log(`error:`, error);
@@ -200,8 +200,6 @@ const Modal2 = () => {
 	}
 
 	//**************** Notes ****************//
-
-
 	// Fetch - get all notes of this summary (async) 
 	const fetchNotes = async () => {
 		// console.log(`fetchNotes, summaryState`, summaryState);
@@ -283,27 +281,7 @@ const Modal2 = () => {
 			})
     }
 
-	// // // TODO need to coding update method...
-	// const updateNoteOld = async (note) => {
-	// 	const response = await updateNote(note);
 
-	// 	const noteThatUpdating = await fetchNote(noteId);
-	// 	console.log("befor update - ", noteThatUpdating);
-
-	// 	// add updade function local and create change to newNote
-	// 	const newNote = { ...noteThatUpdating, } //todo
-
-	// 	const response = await fetch(Url + `notes/${noteId}`, {
-	// 		method: 'PUT',
-	// 		headers: {
-	// 			'Content-type': 'application/json'
-	// 		},
-	// 		body: JSON.stringify(newNote)
-	// 	})
-	// 	const data = await response.json()
-	// }
-
-	//close the Editor section (extension)
 	const closeVideoTagSection = () => {
 		let videoTagSection = document.getElementById("video-tag-manger-section");
 		// console.log(videoTagSection)
@@ -377,7 +355,6 @@ const Modal2 = () => {
 		}
 	};
 
-
 	return (
 		<ModalContext.Consumer>
 			{({ windowPosition, hasDraggedWindowPosition, currentTimeSec, currentTimeFormated, getVideoCurrentTime }) => (
@@ -421,16 +398,11 @@ const Modal2 = () => {
 											currentTimeSec={currentTimeSec}
 											addNoteToSummary={addNoteToSummary}
 										/>
-								
 
-										
 									</div>
 								</SummarysContext.Provider>
 
 							}
-							
-
-							
 						</div>
 
 					</div>

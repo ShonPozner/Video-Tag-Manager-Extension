@@ -44,7 +44,8 @@
 	],
 	"externally_connectable": {
 		"matches": [
-			"http://localhost/*"
+			"http://localhost/*",
+			"*://*.d2eyfouotrtjmo.amplifyapp.com/*"
 		],
 		"accept_tls_channel_id": true
 	}
