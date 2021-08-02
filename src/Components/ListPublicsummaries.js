@@ -20,7 +20,7 @@ function ListPublicsummaries({setSummaryState, setReady, publicSummaryState, }) 
                     <p className="accordion_title1">{summary.title}</p>
                     <div className="user-actions-icon1">
                         <FaHeart className="hart-icon"></FaHeart>
-                        {summary.likes.size? summary.likes.size : 0}
+                        {summary.likes.length}
 
                     </div>
                     
